@@ -41,7 +41,7 @@ export class ElasticPinoLogger extends PinoLogger implements LoggerService {
         options: {
           timestampKey: '@timestamp',
           messageKey: 'message',
-          ignore: 'pid,hostname',
+          ignore: 'pid,hostname,0',
         },
       });
     }
