@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { HelpService } from './help.service';
 import { DiscordModule } from '@discord-nestjs/core';
+import { HelpCommand } from './help.command';
 
 @Module({
   imports: [DiscordModule.forFeature()],
-  providers: [HelpService],
+  providers: [HelpCommand],
 })
 export class HelpModule {}

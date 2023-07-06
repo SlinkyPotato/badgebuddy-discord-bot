@@ -12,6 +12,5 @@ export class BotGateway {
   @Once(`ready`)
   onReady(): void {
     console.log('discord client is ready');
-    console.log('hello world');
   }
 }
