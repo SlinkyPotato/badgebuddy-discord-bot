@@ -8,6 +8,6 @@ import { ContextMenuCommandInteraction } from 'discord.js';
 export class HelpCommand {
   @Handler()
   onHelpCommand(interaction: ContextMenuCommandInteraction) {
-    return 'help command response';
+    return 'help command response ';
   }
 }
