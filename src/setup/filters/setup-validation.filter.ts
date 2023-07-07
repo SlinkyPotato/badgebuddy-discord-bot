@@ -1,22 +1,21 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
-import { WrongArgsException } from '@discord-nestjs/common';
-import { Colors, EmbedBuilder } from 'discord.js';
+import { Colors, Message } from 'discord.js';
+import { SlashException } from '../../exceptions/slash.exception';
 
-@Catch(WrongArgsException)
+@Catch(SlashException)
 export class SetupValidationFilter implements ExceptionFilter {
-  async catch(
-    exceptionList: WrongArgsException,
-    host: ArgumentsHost,
-  ): Promise<void> {
+  async catch(slashError: SlashException, host: ArgumentsHost): Promise<void> {
     const interaction = host.getArgByIndex(0);
-    const embeds = exceptionList.getError().map((exception) => {
-      new EmbedBuilder().setColor(Colors.Red).addFields(
-        Object.values(exception.constraints).map((value) => ({
-          name: exception.value,
-          value,
-        })),
-      );
-    });
-    if (interaction.isRepliable()) await interaction.reply({ embeds });
+    if (interaction.isRepliable()) {
+      await interaction.reply({
+        embeds: [
+          {
+            title: 'Validation Error',
+            description: slashError.message,
+            color: Colors.Red,
+          },
+        ],
+      } as Message);
+    }
   }
 }
