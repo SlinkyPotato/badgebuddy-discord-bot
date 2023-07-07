@@ -3,6 +3,7 @@ import { HelpModule } from './help/help.module';
 import { DiscordModule, DiscordModuleOption } from '@discord-nestjs/core';
 import { GatewayIntentBits, Partials } from 'discord.js';
 import { BotGateway } from './bot.gateway';
+import { SetupModule } from './setup/setup.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { BotGateway } from './bot.gateway';
       }),
     }),
     HelpModule,
+    SetupModule,
   ],
   providers: [BotGateway, Logger],
 })
