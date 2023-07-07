@@ -2,7 +2,7 @@ import { Command, Handler, IA } from '@discord-nestjs/core';
 import { SetupValidationFilter } from './filters/setup-validation.filter';
 import { ValidationPipe } from '@discord-nestjs/common';
 import { CommandInteraction, PermissionsBitField } from 'discord.js';
-import { UseFilters, UseGuards } from '@nestjs/common';
+import { Logger, UseFilters, UseGuards } from '@nestjs/common';
 import { RolesGuard } from './guards/roles.guard';
 import { GuildServerGuard } from './guards/guild-server.guard';
 import { Roles } from '../../decorators/roles.decorator';
@@ -16,11 +16,13 @@ import { Roles } from '../../decorators/roles.decorator';
   PermissionsBitField.Flags.ManageGuild,
 )
 export class SetupCommand {
+  private readonly logger = new Logger(SetupCommand.name);
+
   @Handler()
   @UseFilters(SetupValidationFilter)
   @UseGuards(RolesGuard, GuildServerGuard)
   async onSetupCommand(@IA(ValidationPipe) interaction: CommandInteraction) {
-    console.log(interaction);
+    this.logger.log(interaction);
     // await interaction.reply('replying back!');
     // throw new HttpException('Not implemented', HttpStatus.NOT_IMPLEMENTED);
     return 'Hello from setup command!';

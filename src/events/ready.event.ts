@@ -1,9 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { InjectDiscordClient, On, Once } from '@discord-nestjs/core';
-import { Client, Guild, Message } from 'discord.js';
+import { Injectable, Logger } from '@nestjs/common';
+import { InjectDiscordClient, Once } from '@discord-nestjs/core';
+import { Client } from 'discord.js';
 
 @Injectable()
 export class ReadyEvent {
+  private readonly logger = new Logger(ReadyEvent.name);
+
   constructor(
     @InjectDiscordClient()
     private readonly client: Client,
@@ -11,6 +13,6 @@ export class ReadyEvent {
 
   @Once(`ready`)
   onReady(): void {
-    console.log('discord client is ready');
+    this.logger.log('discord client is ready');
   }
 }

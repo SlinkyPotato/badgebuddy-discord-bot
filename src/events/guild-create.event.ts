@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectDiscordClient, On } from '@discord-nestjs/core';
 import { Client, Guild } from 'discord.js';
 
 @Injectable()
 export class GuildCreateEvent {
+  private readonly logger = new Logger(GuildCreateEvent.name);
   constructor(
     @InjectDiscordClient()
     private readonly client: Client,
@@ -11,6 +12,6 @@ export class GuildCreateEvent {
 
   @On('guildCreate')
   async onGuild(guild: Guild): Promise<void> {
-    console.log(`guild joined, guildId: ${guild.id}, name: ${guild.name}`);
+    this.logger.log(`guild joined, guildId: ${guild.id}, name: ${guild.name}`);
   }
 }
