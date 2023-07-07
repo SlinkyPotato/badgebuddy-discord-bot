@@ -1,4 +1,4 @@
-import { Command, UseGroup } from '@discord-nestjs/core';
+import { Command } from '@discord-nestjs/core';
 import { PoapSubCommand } from './poap/poap-sub.command';
 
 @Command({

@@ -3,9 +3,9 @@ import { SetupValidationFilter } from './filters/setup-validation.filter';
 import { ValidationPipe } from '@discord-nestjs/common';
 import { CommandInteraction, PermissionsBitField } from 'discord.js';
 import { UseFilters, UseGuards } from '@nestjs/common';
-import { Roles } from '../decorators/roles.decorator';
 import { RolesGuard } from './guards/roles.guard';
 import { GuildServerGuard } from './guards/guild-server.guard';
+import { Roles } from '../../decorators/roles.decorator';
 
 @Command({
   name: 'setup',

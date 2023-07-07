@@ -1,9 +1,8 @@
 import { Logger, Module } from '@nestjs/common';
-import { HelpModule } from './help/help.module';
 import { DiscordModule, DiscordModuleOption } from '@discord-nestjs/core';
 import { GatewayIntentBits, Partials } from 'discord.js';
-import { BotGateway } from './bot.gateway';
-import { SetupModule } from './setup/setup.module';
+import { EventsModule } from './events/events.module';
+import { CommandsModule } from './commands/commands.module';
 
 @Module({
   imports: [
@@ -32,9 +31,9 @@ import { SetupModule } from './setup/setup.module';
         failOnLogin: true,
       }),
     }),
-    HelpModule,
-    SetupModule,
+    EventsModule,
+    CommandsModule,
   ],
-  providers: [BotGateway, Logger],
+  providers: [Logger],
 })
 export class AppModule {}
