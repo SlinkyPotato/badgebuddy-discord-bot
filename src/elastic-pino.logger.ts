@@ -60,10 +60,16 @@ export class ElasticPinoLogger extends PinoLogger implements LoggerService {
     } as LoggerOptions);
   }
 
+  // LoggerService
   log(message: any, ...optionalParams: any[]): any {
     this.info({ ...optionalParams }, message);
   }
 
+  error(message: any, ...optionalParams: any[]): any {
+    super.error({ ...optionalParams }, message);
+  }
+
+  // PinoLogger
   info(mergingObj: unknown, msg?: string, ...args: any[]): void {
     if (this.apm?.currentTransaction) {
       super.info({
