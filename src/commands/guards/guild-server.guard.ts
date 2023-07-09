@@ -13,7 +13,7 @@ export class GuildServerGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const interaction: CommandInteraction = context.getArgByIndex(0);
     if (interaction.guildId == null || interaction.guildId == '') {
-      throw new SlashException('Please setup from a discord server.');
+      throw new SlashException('Please run command from a discord server.');
     }
     return true;
   }
