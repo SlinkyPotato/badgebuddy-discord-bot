@@ -1,26 +1,23 @@
 import { Command, Handler, IA } from '@discord-nestjs/core';
-import { SetupValidationFilter } from './filters/setup-validation.filter';
 import { ValidationPipe } from '@discord-nestjs/common';
 import { CommandInteraction, PermissionsBitField } from 'discord.js';
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
-import { RolesGuard } from './guards/roles.guard';
-import { GuildServerGuard } from './guards/guild-server.guard';
 import { Roles } from '../../decorators/roles.decorator';
 
 @Command({
-  name: 'setup',
-  description: 'Configure and setup DEGEN for this discord server.',
+  name: 'start',
+  description: 'Start tracking for the POAP event.',
 })
 @Roles(
   PermissionsBitField.Flags.Administrator,
   PermissionsBitField.Flags.ManageGuild,
 )
-export class SetupCommand {
-  private readonly logger = new Logger(SetupCommand.name);
+export class StartCommand {
+  private readonly logger = new Logger(StartCommand.name);
 
   @Handler()
-  @UseFilters(SetupValidationFilter)
-  @UseGuards(RolesGuard, GuildServerGuard)
+  // @UseFilters(SetupValidationFilter)
+  // @UseGuards(RolesGuard, GuildServerGuard)
   async onSetupCommand(@IA(ValidationPipe) interaction: CommandInteraction) {
     this.logger.log(interaction);
     // await interaction.reply('replying back!');

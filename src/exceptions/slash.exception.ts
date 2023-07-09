@@ -1,7 +1,7 @@
 import { ValidationError } from 'class-validator';
 import { ThreadChannel } from 'discord.js';
 
-export class SlashException extends ValidationError {
+export default class SlashException extends ValidationError {
   message: string;
   thread?: ThreadChannel;
 
