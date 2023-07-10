@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ReadyEvent } from './ready.event';
-import { GuildCreateEvent } from './guild-create.event';
-import { SetupModule } from './setup/setup.module';
-import { DiscordModule } from '@discord-nestjs/core';
+import { GuildDeleteModule } from './guild-delete/guild-delete.module';
+import { GuildCreateModule } from './guild-create/guild-create.module';
+import { ReadyModule } from './ready/ready.module';
 
 @Module({
-  imports: [DiscordModule.forFeature(), SetupModule],
-  providers: [ReadyEvent, GuildCreateEvent],
+  imports: [ReadyModule, GuildCreateModule, GuildDeleteModule],
+  providers: [],
 })
 export class EventsModule {}

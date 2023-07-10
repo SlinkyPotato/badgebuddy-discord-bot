@@ -10,6 +10,7 @@ import {
   TextChannel,
 } from 'discord.js';
 import axios from 'axios';
+import PostRegistrationDto from './dto/post-registration.dto';
 
 @Injectable()
 export class SetupService {
@@ -34,8 +35,8 @@ export class SetupService {
   async setup(guild: Guild): Promise<void> {
     const role: Role = await this.createAuthorizedRoles(guild);
     await this.assignRoleToBot(guild, role);
-    const category = await this.createPOAPCategory(guild, role);
-    const channel = await this.createPOAPChannel(guild, role, category);
+    // const category = await this.createPOAPCategory(guild, role);
+    const channel = await this.createPOAPChannel(guild);
     let newsChannel = null;
     // optionally create newsChannel channel
     if (guild.features.includes('COMMUNITY')) {
@@ -44,13 +45,7 @@ export class SetupService {
     }
     this.announceInstructions(channel, role);
     // call /registration endpoint
-    await this.callRegistrationEndpoint(
-      guild,
-      role,
-      category,
-      channel,
-      newsChannel,
-    );
+    await this.callRegistrationEndpoint(guild, role, channel, newsChannel);
   }
 
   private async createAuthorizedRoles(guild: Guild): Promise<Role> {
@@ -113,8 +108,7 @@ export class SetupService {
 
   private async createPOAPChannel(
     guild: Guild,
-    role: Role,
-    category: CategoryChannel,
+    // category: CategoryChannel,
   ): Promise<TextChannel> {
     this.logger.log('attempting to create POAP channel');
 
@@ -127,11 +121,11 @@ export class SetupService {
     this.logger.debug('guild is available');
 
     const channel = await guild.channels.create({
-      name: '🤖-commands',
+      name: 'poap-commands',
       reason: 'channel registration',
       type: ChannelType.GuildText,
-      position: 0,
-      parent: category,
+      position: 1,
+      // parent: category,
     });
     if (!channel || channel.type !== ChannelType.GuildText) {
       throw new Error('failed to setup channel');
@@ -146,6 +140,7 @@ export class SetupService {
       name: 'POAP Announcements',
       reason: 'news channel registration',
       type: ChannelType.GuildNews,
+      position: 0,
       permissionOverwrites: [
         {
           id: role.id,
@@ -238,7 +233,7 @@ export class SetupService {
   private async callRegistrationEndpoint(
     guild: Guild,
     role: Role,
-    category: CategoryChannel,
+    // category: CategoryChannel,
     channel: TextChannel,
     newsChannel: NewsChannel | null,
   ) {
@@ -250,7 +245,6 @@ export class SetupService {
           guildId: guild.id.toString(),
           guildName: guild.name.toString(),
           roleId: role.id.toString(),
-          categoryId: category.id.toString(),
           channelId: channel.id.toString(),
           newsChannelId: newsChannel?.id.toString(),
         } as PostRegistrationDto,

@@ -3,6 +3,8 @@ import { DiscordModule, DiscordModuleOption } from '@discord-nestjs/core';
 import { GatewayIntentBits, Partials } from 'discord.js';
 import { EventsModule } from './events/events.module';
 import { CommandsModule } from './commands/commands.module';
+import { APP_GUARD } from '@nestjs/core';
+import { GuildServerGuard } from './guards/guild-server.guard';
 
 @Module({
   imports: [
@@ -34,6 +36,6 @@ import { CommandsModule } from './commands/commands.module';
     EventsModule,
     CommandsModule,
   ],
-  providers: [Logger],
+  providers: [Logger, { provide: APP_GUARD, useClass: GuildServerGuard }],
 })
 export class AppModule {}

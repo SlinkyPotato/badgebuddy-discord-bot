@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { CommandInteraction } from 'discord.js';
-import SlashException from '../../exceptions/slash.exception';
+import SlashException from '../exceptions/slash.exception';
 
 @Injectable()
 export class GuildServerGuard implements CanActivate {

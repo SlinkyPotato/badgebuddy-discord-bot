@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DiscordModule } from '@discord-nestjs/core';
-import { SetupService } from './setup.service';
+import { ReadyService } from './ready.service';
 
 @Module({
   imports: [DiscordModule.forFeature()],
-  providers: [SetupService],
+  providers: [ReadyService],
 })
-export class SetupModule {}
+export class ReadyModule {}

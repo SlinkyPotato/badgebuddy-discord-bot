@@ -1,10 +1,9 @@
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { ValidationPipe } from '@discord-nestjs/common';
-import { CommandInteraction, PermissionsBitField } from 'discord.js';
+import { CommandInteraction } from 'discord.js';
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
-import { Roles } from '../../decorators/roles.decorator';
-import { SetupValidationFilter } from '../filters/setup-validation.filter';
-import { GuildServerGuard } from '../guards/guild-server.guard';
+import { SetupValidationFilter } from '../../filters/setup-validation.filter';
+import { GuildServerGuard } from '../../guards/guild-server.guard';
 
 @Command({
   name: 'start',
