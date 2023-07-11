@@ -254,7 +254,7 @@ export class SetupService {
       }
       this.logger.log('successfully registered guild');
     } catch (error) {
-      throw error;
+      this.logger.error(`failed to register guildId: ${guild.id}`, error);
     }
   }
 }
