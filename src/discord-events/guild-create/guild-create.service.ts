@@ -9,12 +9,13 @@ import {
   Role,
   TextChannel,
 } from 'discord.js';
-import axios from 'axios';
-import PostRegistrationDto from './dto/post-registration.dto';
+import { EventsApiService } from '../../repository/events-api/events-api.service';
 
 @Injectable()
-export class SetupService {
-  private readonly logger: Logger = new Logger(SetupService.name);
+export class GuildCreateService {
+  private readonly logger: Logger = new Logger(GuildCreateService.name);
+
+  constructor(private eventsService: EventsApiService) {}
 
   private static readonly HOW_TO_ARRANGE_ROLE_URL =
     'https://degen-public.s3.amazonaws.com/public/assets/how_to_arrange_authorized_degens_role.gif';
@@ -45,7 +46,12 @@ export class SetupService {
     }
     this.announceInstructions(channel, role);
     // call /registration endpoint
-    await this.callRegistrationEndpoint(guild, role, channel, newsChannel);
+    await this.eventsService.postRegistration(
+      guild,
+      role,
+      channel,
+      newsChannel,
+    );
   }
 
   private async createAuthorizedRoles(guild: Guild): Promise<Role> {
@@ -209,7 +215,7 @@ export class SetupService {
           fields: [
             {
               name: 'How To Arrange Role',
-              value: SetupService.HOW_TO_ARRANGE_ROLE_URL,
+              value: GuildCreateService.HOW_TO_ARRANGE_ROLE_URL,
             },
           ],
         },
@@ -222,39 +228,11 @@ export class SetupService {
           fields: [
             {
               name: 'How to Add Role',
-              value: SetupService.HOW_TO_ADD_ROLE_URL,
+              value: GuildCreateService.HOW_TO_ADD_ROLE_URL,
             },
           ],
         },
       ],
     });
-  }
-
-  private async callRegistrationEndpoint(
-    guild: Guild,
-    role: Role,
-    // category: CategoryChannel,
-    channel: TextChannel,
-    newsChannel: NewsChannel | null,
-  ) {
-    try {
-      this.logger.log('attempting to call registration endpoint');
-      const response = await axios.post(
-        `${process.env.BADGE_BUDDY_API_HOST}/registration`,
-        {
-          guildId: guild.id.toString(),
-          guildName: guild.name.toString(),
-          roleId: role.id.toString(),
-          channelId: channel.id.toString(),
-          newsChannelId: newsChannel?.id.toString(),
-        } as PostRegistrationDto,
-      );
-      if (response.status !== 201) {
-        throw new Error('failed to register guild');
-      }
-      this.logger.log('successfully registered guild');
-    } catch (error) {
-      this.logger.error(`failed to register guildId: ${guild.id}`, error);
-    }
   }
 }

@@ -3,8 +3,8 @@ import { Once } from '@discord-nestjs/core';
 import { Client } from 'discord.js';
 
 @Injectable()
-export class ReadyService {
-  private readonly logger = new Logger(ReadyService.name);
+export class ReadyEvent {
+  private readonly logger = new Logger(ReadyEvent.name);
 
   @Once(`ready`)
   onReady(client: Client): void {

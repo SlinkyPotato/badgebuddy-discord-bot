@@ -2,7 +2,7 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { CommandInteraction } from 'discord.js';
-import SlashException from '../exceptions/slash.exception';
+import CommandException from '../_exceptions/command.exception';
 
 @Injectable()
 export class GuildServerGuard implements CanActivate {
@@ -13,7 +13,7 @@ export class GuildServerGuard implements CanActivate {
   ): boolean | Promise<boolean> | Observable<boolean> {
     const interaction: CommandInteraction = context.getArgByIndex(0);
     if (interaction.guildId == null || interaction.guildId == '') {
-      throw new SlashException('Please run command from a discord server.');
+      throw new CommandException('Please run command from a discord server.');
     }
     return true;
   }

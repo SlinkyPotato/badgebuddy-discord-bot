@@ -7,4 +7,4 @@ import { ReadyModule } from './ready/ready.module';
   imports: [ReadyModule, GuildCreateModule, GuildDeleteModule],
   providers: [],
 })
-export class EventsModule {}
+export class DiscordEventsModule {}

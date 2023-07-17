@@ -2,8 +2,8 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../decorators/roles.decorator';
-import SlashException from '../exceptions/slash.exception';
+import { ROLES_KEY } from '../_decorators/roles.decorator';
+import CommandException from '../_exceptions/command.exception';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -22,7 +22,7 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     if (!requiredRoles.some((role) => guildMember.permissions.has(role))) {
-      throw new SlashException(
+      throw new CommandException(
         'Sorry, only discord admins and managers can configure poap settings.',
       );
     }

@@ -1,10 +1,10 @@
 import { Logger, Module } from '@nestjs/common';
 import { DiscordModule, DiscordModuleOption } from '@discord-nestjs/core';
 import { GatewayIntentBits, Partials } from 'discord.js';
-import { EventsModule } from './events/events.module';
+import { DiscordEventsModule } from './discord-events/discord-events.module';
 import { CommandsModule } from './commands/commands.module';
-import { APP_GUARD } from '@nestjs/core';
-import { GuildServerGuard } from './guards/guild-server.guard';
+import { ConfigModule } from './config/config.module';
+import { RepositoryModule } from './repository/repository.module';
 
 @Module({
   imports: [
@@ -33,9 +33,11 @@ import { GuildServerGuard } from './guards/guild-server.guard';
         failOnLogin: true,
       }),
     }),
-    EventsModule,
+    DiscordEventsModule,
     CommandsModule,
+    ConfigModule,
+    RepositoryModule,
   ],
-  providers: [Logger, { provide: APP_GUARD, useClass: GuildServerGuard }],
+  providers: [Logger],
 })
 export class AppModule {}

@@ -1,9 +1,13 @@
 import { Command, Handler, IA } from '@discord-nestjs/core';
-import { ValidationPipe } from '@discord-nestjs/common';
-import { CommandInteraction } from 'discord.js';
+import { SlashCommandPipe, ValidationPipe } from '@discord-nestjs/common';
 import { Logger, UseFilters, UseGuards } from '@nestjs/common';
-import { SetupValidationFilter } from '../../filters/setup-validation.filter';
-import { GuildServerGuard } from '../../guards/guild-server.guard';
+import { StartPOAPDto } from './dto/start-poap.dto';
+import { EventsApiService } from '../../repository/events-api/events-api.service';
+import { CommandsService } from '../commands.service';
+import { GuildServerGuard } from '../_guards/guild-server.guard';
+import { StartService } from './start.service';
+import { CommandValidationFilter } from '../_filters/command-validation.filter';
+import { SlashValidationFilter } from '../_filters/slash-validation.filter';
 
 @Command({
   name: 'start',
@@ -14,13 +18,27 @@ import { GuildServerGuard } from '../../guards/guild-server.guard';
 export class StartCommand {
   private readonly logger = new Logger(StartCommand.name);
 
+  constructor(
+    private eventsApiService: EventsApiService,
+    private commandsService: CommandsService,
+    private startService: StartService,
+  ) {}
+
   @Handler()
-  @UseFilters(SetupValidationFilter)
+  @UseFilters(SlashValidationFilter)
   @UseGuards(GuildServerGuard)
-  async onStartCommand(@IA(ValidationPipe) interaction: CommandInteraction) {
-    this.logger.log(interaction);
-    // await interaction.reply('replying back!');
-    // throw new HttpException('Not implemented', HttpStatus.NOT_IMPLEMENTED);
-    return 'Hello from start command!';
+  async onStartCommand(
+    @IA(SlashCommandPipe, ValidationPipe) startPoapDTO: StartPOAPDto,
+  ) {
+    this.logger.log(startPoapDTO);
+    // const guildMember: GuildMember = startPoapDTO.member as GuildMember;
+    // const guildDto = await this.eventsApiService.getRegistration(
+    //   guildMember.guild.id,
+    // );
+    //
+    // this.commandsService.validateUserAccess(guildMember, guildDto.roleId);
+    //
+    // return this.startService.initPoapEvent(guildMember, guildDto);
+    return 'test';
   }
 }

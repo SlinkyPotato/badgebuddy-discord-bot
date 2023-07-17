@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { DiscordModule } from '@discord-nestjs/core';
-import { ReadyService } from './ready.service';
+import { ReadyEvent } from './ready.event';
 
 @Module({
   imports: [DiscordModule.forFeature()],
-  providers: [ReadyService],
+  providers: [ReadyEvent],
 })
 export class ReadyModule {}

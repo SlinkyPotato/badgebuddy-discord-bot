@@ -1,7 +1,7 @@
 import 'dotenv/config'; // must be first import
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ElasticPinoLogger } from './elastic-pino.logger';
+import { ElasticPinoLogger } from './config/elastic-pino.logger';
 
 async function bootstrap() {
   const pinoLogger = new ElasticPinoLogger();

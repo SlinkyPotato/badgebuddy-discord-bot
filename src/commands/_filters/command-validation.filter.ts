@@ -1,10 +1,14 @@
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { Colors, Message } from 'discord.js';
-import SlashException from '../exceptions/slash.exception';
+import { WrongArgsException } from '@discord-nestjs/common';
+import CommandException from '../_exceptions/command.exception';
 
-@Catch(SlashException)
-export class SetupValidationFilter implements ExceptionFilter {
-  async catch(slashError: SlashException, host: ArgumentsHost): Promise<void> {
+@Catch(CommandException)
+export class CommandValidationFilter implements ExceptionFilter {
+  async catch(
+    slashError: CommandException | WrongArgsException,
+    host: ArgumentsHost,
+  ): Promise<void> {
     const interaction = host.getArgByIndex(0);
     if (interaction.isRepliable()) {
       await interaction.reply({
