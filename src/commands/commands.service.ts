@@ -9,9 +9,7 @@ export class CommandsService {
 
   validateUserAccess(guildMember: GuildMember, poapManagerRoleId: string) {
     if (guildMember.roles.cache.has(poapManagerRoleId)) {
-      this.logger.log(
-        'user has access to use this command, userId: ' + guildMember.id,
-      );
+      this.logger.log('user has access validated, userId: ' + guildMember.id);
       return;
     }
 

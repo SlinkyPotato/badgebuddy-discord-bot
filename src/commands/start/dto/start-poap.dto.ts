@@ -5,31 +5,38 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { Param } from '@discord-nestjs/core';
-import { CommandInteraction } from 'discord.js';
+import { Channel, Param } from '@discord-nestjs/core';
+import { ChannelType, VoiceChannel } from 'discord.js';
 
 export class StartPOAPDto {
   @IsAlphanumeric('en-US', {
     message: 'The event name must be alphanumeric and less than 250 chars.',
   })
   @Param({
-    name: 'event-name',
-    description:
-      'The name of the event that participants will see during claim.',
+    name: 'title',
+    description: 'The name of the event.',
     required: true,
     maxLength: 250,
     minLength: 1,
   })
-  name: string;
+  eventName: string;
 
   @Min(10)
   @Max(720)
   @IsNumberString()
   @IsOptional()
   @Param({
-    name: 'event-duration-minutes',
-    description: 'Number of minutes the event will remain active.',
+    name: 'duration',
+    description: 'Number of minutes event will remain active.',
     required: false,
   })
-  duration: string;
+  eventDuration: string;
+
+  @Param({
+    name: 'channel',
+    description: 'The voice channel or stage for event tracking.',
+    required: true,
+  })
+  @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
+  eventChannel: VoiceChannel;
 }

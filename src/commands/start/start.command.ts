@@ -6,8 +6,8 @@ import { EventsApiService } from '../../repository/events-api/events-api.service
 import { CommandsService } from '../commands.service';
 import { GuildServerGuard } from '../_guards/guild-server.guard';
 import { StartService } from './start.service';
-import { CommandValidationFilter } from '../_filters/command-validation.filter';
 import { SlashValidationFilter } from '../_filters/slash-validation.filter';
+import { GuildMember, Interaction } from 'discord.js';
 
 @Command({
   name: 'start',
@@ -29,16 +29,14 @@ export class StartCommand {
   @UseGuards(GuildServerGuard)
   async onStartCommand(
     @IA(SlashCommandPipe, ValidationPipe) startPoapDTO: StartPOAPDto,
+    @IA() interaction: Interaction,
   ) {
     this.logger.log(startPoapDTO);
-    // const guildMember: GuildMember = startPoapDTO.member as GuildMember;
-    // const guildDto = await this.eventsApiService.getRegistration(
-    //   guildMember.guild.id,
-    // );
-    //
-    // this.commandsService.validateUserAccess(guildMember, guildDto.roleId);
-    //
-    // return this.startService.initPoapEvent(guildMember, guildDto);
-    return 'test';
+    const guildMember: GuildMember = interaction.member as GuildMember;
+    const guildDto = await this.eventsApiService.getRegistration(
+      guildMember.guild.id,
+    );
+    this.commandsService.validateUserAccess(guildMember, guildDto.roleId);
+    return this.startService.initPoapEvent(guildMember, guildDto, startPoapDTO);
   }
 }
