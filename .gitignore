@@ -38,3 +38,5 @@ lerna-debug.log*
 !.env.project
 !.env.vault
 .fleet
+
+badge-buddy-bot.iml
