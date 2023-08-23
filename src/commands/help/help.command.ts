@@ -1,7 +1,4 @@
 import { Command, Handler } from '@discord-nestjs/core';
-import { Inject } from '@nestjs/common';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
 
 @Command({
   name: 'help',
@@ -13,13 +10,11 @@ export class HelpCommand {
   static readonly FEATURE_REQUEST_CHANNEL_INVITE =
     'https://discord.gg/TPEr4hy32x';
 
-  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
-
   @Handler()
   async onPoapSubCommand() {
-    await this.cacheManager.set('test', 'test-value');
-    const testVal = await this.cacheManager.get('test');
-    console.log(testVal);
+    // await this.cacheManager.set('test', 'test-value');
+    // const testVal = await this.cacheManager.get('test');
+    // console.log(testVal);
     return {
       embeds: [
         {
