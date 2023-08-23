@@ -19,11 +19,4 @@ COPY README.md /app/dist/
 
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --offline --prod --frozen-lockfile
 
-HEALTHCHECK \
-  --interval=1h \
-  --timeout=30s \
-  --start-period=3s \
-  --retries=3 \
-  CMD [ "node", "./health-check.js" ]
-
 CMD ["pnpm", "start:prod"]
