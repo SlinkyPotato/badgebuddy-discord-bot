@@ -14,8 +14,6 @@ services:
       REDIS_PORT: 6379
     networks:
       - local_server
-    ports:
-      - 3002:3000
     profiles:
       - local
     volumes:
@@ -36,8 +34,6 @@ services:
     container_name: badge_buddy_bot_qa
     image: solidchain/badge-buddy-bot:next
     restart: always
-    ports:
-      - 3010:3000
     networks:
       - qa_server
     profiles:
@@ -54,8 +50,6 @@ services:
     container_name: badge_buddy_bot_prod
     image: solidchain/badge-buddy-bot:latest
     restart: always
-    ports:
-      - 3002:3000
     networks:
       - prod_server
     profiles:
