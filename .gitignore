@@ -32,3 +32,13 @@ lerna-debug.log*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+.env*
+.flaskenv*
+!.env.project
+!.env.vault
+.fleet
+
+badge-buddy-bot.iml
+release.md
+changes.md
