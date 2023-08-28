@@ -1,6 +1,6 @@
 {
   "name": "badge-buddy-bot",
-  "version": "0.0.2-0",
+  "version": "0.0.2",
   "description": "Discord bot for Badge Buddy",
   "author": "SlinkyPotato <patinobrian@gmail.com>",
   "private": true,
