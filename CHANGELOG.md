@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2-0](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.1...v0.0.2-0) (2023-08-28)
+
+
+### Performance
+
+* upgrade node to 20.5.1 and pnpm to 8.7.0 ([f1da5ff](https://github.com/solidchain-tech/badge-buddy-bot/commit/f1da5ffd85c8861b8f98cc3dfb1e6a50baabbd57))
+
 ### 0.0.1 (2023-08-23)
 
 
