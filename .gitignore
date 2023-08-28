@@ -1,6 +1,8 @@
 # compiled output
 /dist
 /node_modules
+changes.md
+release.md
 
 # Logs
 logs
@@ -25,6 +27,7 @@ lerna-debug.log*
 *.launch
 .settings/
 *.sublime-workspace
+badge-buddy-bot.iml
 
 # IDE - VSCode
 .vscode/*
@@ -38,7 +41,3 @@ lerna-debug.log*
 !.env.project
 !.env.vault
 .fleet
-
-badge-buddy-bot.iml
-release.md
-changes.md
