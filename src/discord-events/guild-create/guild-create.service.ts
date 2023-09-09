@@ -9,13 +9,13 @@ import {
   Role,
   TextChannel,
 } from 'discord.js';
-import { EventsApiService } from '../../repository/events-api/events-api.service';
+import { GuildsApiService } from '../../api/guilds/guilds-api.service';
 
 @Injectable()
 export class GuildCreateService {
   private readonly logger: Logger = new Logger(GuildCreateService.name);
 
-  constructor(private eventsService: EventsApiService) {}
+  constructor(private eventsService: GuildsApiService) {}
 
   private static readonly HOW_TO_ARRANGE_ROLE_URL =
     'https://degen-public.s3.amazonaws.com/public/assets/how_to_arrange_authorized_degens_role.gif';

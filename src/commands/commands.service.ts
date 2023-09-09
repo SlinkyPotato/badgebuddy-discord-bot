@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { GuildMember, TextChannel, ThreadChannel } from 'discord.js';
-import PostRegistrationDto from '../repository/events-api/dto/post-registration.dto';
+import { GuildMember } from 'discord.js';
 import CommandException from './_exceptions/command.exception';
 
 @Injectable()
