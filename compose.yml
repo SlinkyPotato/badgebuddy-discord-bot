@@ -1,24 +1,5 @@
 name: badge-buddy-bot
 services:
-  badge_buddy_bot_local:
-    container_name: badge_buddy_bot_local
-    depends_on:
-      - redis_local
-    build:
-      context: .
-      tags:
-        - solidchain/badge-buddy-bot:dev
-    environment:
-      DOTENV_KEY: ${DOTENV_KEY}
-      REDIS_HOST: redis_local
-      REDIS_PORT: 6379
-    networks:
-      - local_server
-    profiles:
-      - local
-    volumes:
-      - ./logs:/app/logs
-
   redis_local:
     container_name: redis_local
     image: redis:latest
@@ -29,6 +10,27 @@ services:
       - local_server
     profiles:
       - local
+
+  badge_buddy_bot_local:
+    depends_on:
+      - redis_local
+    container_name: badge_buddy_bot_local
+    build:
+      context: .
+      args:
+        NODE_VERSION: ${NODE_VERSION}
+    environment:
+      DOTENV_KEY: ${DOTENV_KEY}
+      REDIS_HOST: 'redis_local'
+      REDIS_PORT: 6379
+    env_file:
+      - .env
+    networks:
+      - local_server
+    profiles:
+      - local
+    volumes:
+      - ./logs:/app/logs
 
   badge_buddy_bot_qa:
     container_name: badge_buddy_bot_qa
@@ -68,6 +70,4 @@ networks:
   qa_server:
     external: true
   prod_server:
-    external: true
-  elastic:
     external: true
