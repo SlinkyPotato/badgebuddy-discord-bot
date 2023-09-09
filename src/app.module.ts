@@ -3,7 +3,6 @@ import { DiscordModule, DiscordModuleOption } from '@discord-nestjs/core';
 import { GatewayIntentBits, Partials } from 'discord.js';
 import { DiscordEventsModule } from './discord-events/discord-events.module';
 import { CommandsModule } from './commands/commands.module';
-import { RepositoryModule } from './repository/repository.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import {
   configureCacheOptions,
@@ -11,6 +10,7 @@ import {
 } from '@solidchain/badge-buddy-common';
 import { RedisClientOptions } from 'redis';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -28,8 +28,12 @@ import { CacheModule } from '@nestjs/cache-manager';
         configureCacheOptions(configService),
     }),
     DiscordModule.forRootAsync({
-      useFactory: (): Promise<DiscordModuleOption> | DiscordModuleOption => ({
-        token: process.env.DISCORD_BOT_TOKEN ?? '',
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (
+        configService: ConfigService,
+      ): Promise<DiscordModuleOption> | DiscordModuleOption => ({
+        token: configService.get<string>('DISCORD_BOT_TOKEN') as string,
         discordClientOptions: {
           intents: [
             GatewayIntentBits.Guilds,
@@ -54,7 +58,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     }),
     DiscordEventsModule,
     CommandsModule,
-    RepositoryModule,
+    ApiModule,
   ],
   providers: [Logger],
 })

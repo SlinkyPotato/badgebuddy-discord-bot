@@ -2,6 +2,7 @@ import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { WrongArgsException } from '@discord-nestjs/common';
 import { ValidationError } from 'class-validator';
 import { Colors, EmbedBuilder } from 'discord.js';
+import CommandException from '../_exceptions/command.exception';
 
 @Catch(WrongArgsException)
 export class SlashValidationFilter implements ExceptionFilter {

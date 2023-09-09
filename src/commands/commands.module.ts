@@ -6,9 +6,10 @@ import { CommandsService } from './commands.service';
 import { APP_GUARD } from '@nestjs/core';
 import { GuildServerGuard } from './_guards/guild-server.guard';
 import { TestModule } from './test/test.module';
+import { ApiModule } from '../api/api.module';
 
 @Module({
-  imports: [HelpModule, StartModule, EndModule, TestModule],
+  imports: [HelpModule, StartModule, EndModule, TestModule, ApiModule],
   providers: [
     CommandsService,
     { provide: APP_GUARD, useClass: GuildServerGuard },

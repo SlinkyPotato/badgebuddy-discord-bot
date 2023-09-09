@@ -12,6 +12,6 @@ export class GuildCreateEvent {
   @On('guildCreate')
   async onGuildCreate(guild: Guild): Promise<void> {
     this.logger.log(`guild joined, guildId: ${guild.id}, name: ${guild.name}`);
-    await this.guildCreateService.setup(guild);
+    this.guildCreateService.setup(guild);
   }
 }
