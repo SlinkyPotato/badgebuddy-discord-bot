@@ -101,7 +101,6 @@ describe('GuildsApiService', () => {
       };
       const mockResponse: PostGuildResponseDto = {
         _id: '64e76ac997f0abc13a431902',
-        guildId: '850840267082563596',
       };
 
       (axios as any).post.mockResolvedValue({
