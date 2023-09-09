@@ -8,6 +8,10 @@ import CommandException from '../_exceptions/command.exception';
 export class GuildServerGuard implements CanActivate {
   constructor(private reflector: Reflector) {}
 
+  /**
+   * Check if the command is being run from a discord server.
+   * @param context
+   */
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {

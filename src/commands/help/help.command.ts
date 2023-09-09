@@ -12,9 +12,6 @@ export class HelpCommand {
 
   @Handler()
   async onPoapSubCommand() {
-    // await this.cacheManager.set('test', 'test-value');
-    // const testVal = await this.cacheManager.get('test');
-    // console.log(testVal);
     return {
       embeds: [
         {
