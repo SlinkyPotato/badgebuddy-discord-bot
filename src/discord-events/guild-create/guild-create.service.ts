@@ -10,12 +10,13 @@ import {
   TextChannel,
 } from 'discord.js';
 import { GuildsApiService } from '../../api/guilds/guilds-api.service';
+import { PostGuildRequestDto } from '../../api/guilds/dto/post-guild.request.dto';
 
 @Injectable()
 export class GuildCreateService {
   private readonly logger: Logger = new Logger(GuildCreateService.name);
 
-  constructor(private eventsService: GuildsApiService) {}
+  constructor(private guildsApiService: GuildsApiService) {}
 
   private static readonly HOW_TO_ARRANGE_ROLE_URL =
     'https://degen-public.s3.amazonaws.com/public/assets/how_to_arrange_authorized_degens_role.gif';
@@ -33,20 +34,27 @@ export class GuildCreateService {
     PermissionsBitField.Flags.UseApplicationCommands,
   ];
 
-  async setup(guild: Guild): Promise<void> {
+  async setup(guild: Guild) {
     const role: Role = await this.createAuthorizedRoles(guild);
     await this.assignRoleToBot(guild, role);
-    // const category = await this.createPOAPCategory(guild, role);
+
     const channel = await this.createPOAPChannel(guild);
-    let newsChannel = null;
-    // optionally create newsChannel channel
+    let newsChannel;
+
     if (guild.features.includes('COMMUNITY')) {
-      newsChannel = await this.createAnnouncementsChannel(guild, role);
+      newsChannel = await this.createNewsChannel(guild, role);
       this.announcePOAPChannel(newsChannel);
     }
     this.announceInstructions(channel, role);
-    // call /registration endpoint
-    await this.eventsService.postGuild(guild, role, channel, newsChannel);
+
+    const request: PostGuildRequestDto = {
+      guildId: guild.id,
+      guildName: guild.name,
+      poapManagerRoleId: role.id,
+      privateChannelId: channel.id,
+      newsChannelId: newsChannel?.id,
+    };
+    return this.guildsApiService.postGuild(request);
   }
 
   private async createAuthorizedRoles(guild: Guild): Promise<Role> {
@@ -107,10 +115,7 @@ export class GuildCreateService {
     return category;
   }
 
-  private async createPOAPChannel(
-    guild: Guild,
-    // category: CategoryChannel,
-  ): Promise<TextChannel> {
+  private async createPOAPChannel(guild: Guild): Promise<TextChannel> {
     this.logger.log('attempting to create POAP channel');
 
     if (!guild.available) {
@@ -126,7 +131,6 @@ export class GuildCreateService {
       reason: 'channel registration',
       type: ChannelType.GuildText,
       position: 1,
-      // parent: category,
     });
     if (!channel || channel.type !== ChannelType.GuildText) {
       throw new Error('failed to setup channel');
@@ -135,7 +139,7 @@ export class GuildCreateService {
     return channel;
   }
 
-  private async createAnnouncementsChannel(guild: Guild, role: Role) {
+  private async createNewsChannel(guild: Guild, role: Role) {
     this.logger.log('attempting to create announcements channel');
     const newsChannel: NewsChannel = await guild.channels.create({
       name: 'POAP Announcements',
@@ -177,8 +181,10 @@ export class GuildCreateService {
   }
 
   private announcePOAPChannel(announcementsChannel: NewsChannel) {
-    this.logger.log('attempting to announce async news channel');
-    announcementsChannel.send({
+    this.logger.verbose(
+      `attempting to announce async news channel, ${announcementsChannel.id}`,
+    );
+    return announcementsChannel.send({
       embeds: [
         {
           title: 'POAP Announcements Channel',
@@ -191,8 +197,10 @@ export class GuildCreateService {
   }
 
   private announceInstructions(channel: TextChannel, role: Role) {
-    this.logger.debug('attempting to announce async instructions');
-    channel.send({
+    this.logger.verbose(
+      `attempting to announce async instructions, channel: ${channel.id}, role: ${role.id}`,
+    );
+    return channel.send({
       embeds: [
         {
           title: 'POAP Management Channel',

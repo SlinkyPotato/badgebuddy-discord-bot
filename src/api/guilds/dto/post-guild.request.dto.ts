@@ -3,5 +3,5 @@ export class PostGuildRequestDto {
   guildName: string;
   poapManagerRoleId: string;
   privateChannelId: string;
-  newsChannelId: string;
+  newsChannelId?: string;
 }

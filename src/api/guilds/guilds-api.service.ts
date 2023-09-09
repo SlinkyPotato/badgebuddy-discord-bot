@@ -1,10 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
-import { Guild, NewsChannel, Role, TextChannel } from 'discord.js';
-import CommandException from '../../commands/_exceptions/command.exception';
 import { ConfigService } from '@nestjs/config';
 import { GetGuildResponseDto } from './dto/get-guild.response.dto';
 import { PostGuildRequestDto } from './dto/post-guild.request.dto';
+import { PostGuildResponseDto } from './dto/post-guild.response.dto';
 
 @Injectable()
 export class GuildsApiService {
@@ -20,82 +19,59 @@ export class GuildsApiService {
     )}/guilds/guildId`;
 
     const response: GetGuildResponseDto = new GetGuildResponseDto();
-    let axiosResponse;
+    const axiosResponse = await axios.get(getGuildsUrl);
 
-    try {
-      axiosResponse = await axios.get(getGuildsUrl);
-
-      if (axiosResponse.status !== 200) {
-        throw new Error('failed to get guild');
-      }
-    } catch (error) {
-      this.logger.error(
-        `failed to get registered guild for guildId: ${guildId}`,
-        error,
-      );
-
-      throw new CommandException('Please try again.');
+    if (axiosResponse.status !== 200) {
+      this.logger.verbose(axiosResponse);
+      throw new Error(`status code: ${axiosResponse.status}`);
     }
 
     response._id = axiosResponse.data._id;
     response.guildId = axiosResponse.data.guildId;
     response.guildName = axiosResponse.data.guildName;
-    response.poapManagerRoleId = axiosResponse.data.roleId;
-    response.privateChannelId = axiosResponse.data.channelId;
+    response.poapManagerRoleId = axiosResponse.data.poapManagerRoleId;
+    response.privateChannelId = axiosResponse.data.privateChannelId;
     response.newsChannelId = axiosResponse.data.newsChannelId;
 
     this.logger.log(`successfully got guildId: ${guildId}`);
     return response;
   }
 
-  async postGuild(
-    guild: Guild,
-    role: Role,
-    channel: TextChannel,
-    newsChannel: NewsChannel | null,
-  ) {
+  async postGuild(request: PostGuildRequestDto): Promise<PostGuildResponseDto> {
     this.logger.log('attempting to call registration endpoint');
 
     const postGuildsUrl = `${this.configService.get(
       'BADGE_BUDDY_API_HOST',
-    )}/guilds${guild.id}`;
-    let response = { data: null, status: null };
+    )}/guilds/${request.guildId}`;
+    const response = new PostGuildResponseDto();
+    const axiosResponse = await axios.post(postGuildsUrl, {
+      guildName: request.guildName,
+      poapManagerRoleId: request.poapManagerRoleId,
+      privateChannelId: request.privateChannelId,
+      newsChannelId: request.newsChannelId,
+    } as PostGuildRequestDto);
 
-    try {
-      response = await axios.post(postGuildsUrl, {
-        guildId: guild.id.toString(),
-        guildName: guild.name.toString(),
-        poapManagerRoleId: role.id.toString(),
-        privateChannelId: channel.id.toString(),
-        newsChannelId: newsChannel?.id.toString(),
-      } as PostGuildRequestDto);
-
-      if (response.status !== 201) {
-        throw new Error('failed to register guild');
-      }
-    } catch (error) {
-      this.logger.error(`failed to register guildId: ${guild.id}`, error);
+    if (axiosResponse.status !== 201) {
+      this.logger.verbose(axiosResponse);
+      throw new Error(`status code: ${axiosResponse.status}`);
     }
 
-    this.logger.log('successfully registered guild');
-    return response.data;
+    response._id = axiosResponse.data._id;
+    response.guildId = axiosResponse.data.guildId;
+
+    this.logger.log('successfully created guild');
+    return response;
   }
 
   async deleteGuild(guildId: string): Promise<void> {
-    this.logger.log(`removing guildId: ${guildId}`);
+    this.logger.log(`attempting to remove guildId: ${guildId}`);
     const deleteGuildsUrl = `${this.configService.get(
       'BADGE_BUDDY_API_HOST',
     )}/guilds/${guildId}`;
-    try {
-      const response = await axios.delete(deleteGuildsUrl);
-      if (response.status !== 204) {
-        throw new Error(`status code not 201: ${guildId}`);
-      }
-    } catch (e) {
-      this.logger.error(
-        `error removing guildId: ${guildId}, error: ${e.message}`,
-        e,
-      );
+    const response = await axios.delete(deleteGuildsUrl);
+    if (response.status !== 204) {
+      throw new Error(`status code: ${response.status}`);
     }
+    this.logger.log(`successfully removed guildId: ${guildId}`);
   }
 }
