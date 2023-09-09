@@ -10,6 +10,7 @@ import {
 } from '@solidchain/badge-buddy-common';
 import { RedisClientOptions } from 'redis';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ApiModule } from './api/api.module';
 
 @Module({
   imports: [
@@ -27,6 +28,8 @@ import { CacheModule } from '@nestjs/cache-manager';
         configureCacheOptions(configService),
     }),
     DiscordModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
       useFactory: (
         configService: ConfigService,
       ): Promise<DiscordModuleOption> | DiscordModuleOption => ({
@@ -55,6 +58,7 @@ import { CacheModule } from '@nestjs/cache-manager';
     }),
     DiscordEventsModule,
     CommandsModule,
+    ApiModule,
   ],
   providers: [Logger],
 })

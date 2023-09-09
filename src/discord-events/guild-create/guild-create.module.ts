@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { GuildCreateEvent } from './guild-create.event';
-import { EventsApiService } from '../../repository/events-api/events-api.service';
 import { GuildCreateService } from './guild-create.service';
+import { GuildsApiModule } from '../../api/guilds/guilds-api.module';
 
 @Module({
-  imports: [],
-  providers: [EventsApiService, GuildCreateEvent, GuildCreateService],
+  imports: [GuildsApiModule],
+  providers: [GuildCreateEvent, GuildCreateService],
 })
 export class GuildCreateModule {}

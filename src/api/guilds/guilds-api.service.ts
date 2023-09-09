@@ -15,8 +15,9 @@ export class GuildsApiService {
   async getGuild(guildId: string): Promise<GetGuildResponseDto> {
     this.logger.log(`attempting to get guildId: ${guildId}`);
 
-    const getGuildsUrl =
-      this.configService.get('BADGE_BUDDY_API_HOST') + '/guilds/' + guildId;
+    const getGuildsUrl = `${this.configService.get(
+      'BADGE_BUDDY_API_HOST',
+    )}/guilds/guildId`;
 
     const response: GetGuildResponseDto = new GetGuildResponseDto();
     let axiosResponse;
@@ -55,8 +56,9 @@ export class GuildsApiService {
   ) {
     this.logger.log('attempting to call registration endpoint');
 
-    const postGuildsUrl =
-      this.configService.get('BADGE_BUDDY_API_HOST') + `/guilds${guild.id}`;
+    const postGuildsUrl = `${this.configService.get(
+      'BADGE_BUDDY_API_HOST',
+    )}/guilds${guild.id}`;
     let response = { data: null, status: null };
 
     try {
@@ -80,17 +82,18 @@ export class GuildsApiService {
   }
 
   async deleteGuild(guildId: string): Promise<void> {
-    this.logger.log(`unregistering guildId: ${guildId}`);
+    this.logger.log(`removing guildId: ${guildId}`);
+    const deleteGuildsUrl = `${this.configService.get(
+      'BADGE_BUDDY_API_HOST',
+    )}/guilds/${guildId}`;
     try {
-      const response = await axios.delete(
-        `${process.env.BADGE_BUDDY_API_HOST}/registration/${guildId}`,
-      );
+      const response = await axios.delete(deleteGuildsUrl);
       if (response.status !== 204) {
         throw new Error(`status code not 201: ${guildId}`);
       }
     } catch (e) {
       this.logger.error(
-        `error unregistering guildId: ${guildId}, error: ${e.message}`,
+        `error removing guildId: ${guildId}, error: ${e.message}`,
         e,
       );
     }

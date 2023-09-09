@@ -46,12 +46,7 @@ export class GuildCreateService {
     }
     this.announceInstructions(channel, role);
     // call /registration endpoint
-    await this.eventsService.postRegistration(
-      guild,
-      role,
-      channel,
-      newsChannel,
-    );
+    await this.eventsService.postGuild(guild, role, channel, newsChannel);
   }
 
   private async createAuthorizedRoles(guild: Guild): Promise<Role> {
