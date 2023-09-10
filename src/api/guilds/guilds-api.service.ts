@@ -7,9 +7,7 @@ import { PostGuildResponseDto } from './dto/post-guild.response.dto';
 
 @Injectable()
 export class GuildsApiService {
-  private readonly logger: Logger = new Logger(GuildsApiService.name);
-
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService, private logger: Logger) {}
 
   async getGuild(guildId: string): Promise<GetGuildResponseDto> {
     this.logger.log(`attempting to get guildId: ${guildId}`);
@@ -37,17 +35,12 @@ export class GuildsApiService {
   }
 
   async postGuild(request: PostGuildRequestDto): Promise<PostGuildResponseDto> {
-    this.logger.log('attempting to call registration endpoint');
+    this.logger.log('attempting to post guild endpoint');
 
     const postGuildsUrl = `${this.configService.get(
       'BADGE_BUDDY_API_HOST',
     )}/guilds/${request.guildId}`;
-    const axiosResponse = await axios.post(postGuildsUrl, {
-      guildName: request.guildName,
-      poapManagerRoleId: request.poapManagerRoleId,
-      privateChannelId: request.privateChannelId,
-      newsChannelId: request.newsChannelId,
-    } as PostGuildRequestDto);
+    const axiosResponse = await axios.post(postGuildsUrl, request);
 
     if (axiosResponse.status !== 201) {
       this.logger.verbose(axiosResponse);

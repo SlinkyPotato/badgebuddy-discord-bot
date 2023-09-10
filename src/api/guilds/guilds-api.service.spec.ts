@@ -5,21 +5,29 @@ import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 import { PostGuildRequestDto } from './dto/post-guild.request.dto';
 import { PostGuildResponseDto } from './dto/post-guild.response.dto';
+import { GetGuildResponseDto } from './dto/get-guild.response.dto';
+import { Logger } from '@nestjs/common';
 
 jest.mock('axios');
 
 describe('GuildsApiService', () => {
   let service: GuildsApiService;
 
-  const mockService = {
+  const mockConfigService = {
     get: jest.fn().mockReturnThis(),
+  };
+
+  const mockLogger = {
+    log: jest.fn().mockReturnThis(),
+    verbose: jest.fn().mockReturnThis(),
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         GuildsApiService,
-        { provide: ConfigService, useValue: mockService },
+        { provide: ConfigService, useValue: mockConfigService },
+        { provide: Logger, useValue: mockLogger },
       ],
     }).compile();
 
@@ -55,7 +63,7 @@ describe('GuildsApiService', () => {
         data: mockResponse,
       });
 
-      const result = await service.getGuild(mockRequest);
+      const result: GetGuildResponseDto = await service.getGuild(mockRequest);
 
       expect(result).toEqual(mockResponse);
     });
