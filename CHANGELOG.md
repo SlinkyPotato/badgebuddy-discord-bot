@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-2](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.3-1...v0.0.3-2) (2023-09-10)
+
+
+### Bug Fixes
+
+* versionrc.json -> .versionrc.json ([b433276](https://github.com/solidchain-tech/badge-buddy-bot/commit/b43327625f12b85a58eac781c08911e6dd1f3719))
+
+
+### Tests
+
+* add coverage for full events api ([f5c2e5f](https://github.com/solidchain-tech/badge-buddy-bot/commit/f5c2e5f66b468f2ba42c209dce1e9250152cb8ad))
+
 ### [0.0.3-1](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.3-0...v0.0.3-1) (2023-09-09)
 
 ### [0.0.3-0](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.2...v0.0.3-0) (2023-09-09)
