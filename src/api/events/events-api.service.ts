@@ -4,8 +4,6 @@ import { PostEventsResponseDto } from './dto/post-events.response.dto';
 import axios from 'axios';
 import { PutEventsRequestDto } from './dto/put-events.request.dto';
 import { PutEventsResponseDto } from './dto/put-events.response.dto';
-import { GetActiveEventsQueryDto } from './dto/get-active-events.query.dto';
-import { GetActiveEventsResponseDto } from './dto/get-active-events.response.dto';
 import { PostEventsRequestDto } from './dto/post-events.request.dto';
 
 @Injectable()
