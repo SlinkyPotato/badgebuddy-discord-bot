@@ -41,6 +41,7 @@ test
 !.env.project
 !.env.vault
 .run
+badge-buddy-bot.iml
 
 # Certs
 /certs
