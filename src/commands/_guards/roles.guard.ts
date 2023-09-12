@@ -2,7 +2,6 @@ import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { CommandInteraction, GuildMember } from 'discord.js';
 import { Reflector } from '@nestjs/core';
-import { ROLES_KEY } from '../_decorators/roles.decorator';
 import CommandException from '../_exceptions/command.exception';
 
 @Injectable()
@@ -11,10 +10,10 @@ export class RolesGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const requiredRoles = this.reflector.getAllAndOverride<bigint[]>(
-      ROLES_KEY,
-      [context.getHandler(), context.getClass()],
-    );
+    const requiredRoles = this.reflector.getAllAndOverride<bigint[]>('roles', [
+      context.getHandler(),
+      context.getClass(),
+    ]);
     const interaction: CommandInteraction = context.getArgByIndex(0);
     const guildMember: GuildMember = interaction.member as GuildMember;
 
