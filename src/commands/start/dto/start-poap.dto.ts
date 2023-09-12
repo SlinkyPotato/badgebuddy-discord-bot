@@ -2,6 +2,7 @@ import {
   IsAlphanumeric,
   IsNumberString,
   IsOptional,
+  IsString,
   Max,
   Min,
 } from 'class-validator';
@@ -9,8 +10,8 @@ import { Channel, Param } from '@discord-nestjs/core';
 import { ChannelType, VoiceChannel } from 'discord.js';
 
 export class StartPOAPDto {
-  @IsAlphanumeric('en-US', {
-    message: 'The event name must be alphanumeric and less than 250 chars.',
+  @IsString({
+    message: 'The event name must be less than 250 chars.',
   })
   @Param({
     name: 'title',

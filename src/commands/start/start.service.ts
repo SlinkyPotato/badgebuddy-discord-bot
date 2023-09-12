@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { GuildMember, ThreadChannel, VoiceChannel } from 'discord.js';
-import { CommandsService } from '../commands.service';
 import { StartPOAPDto } from './dto/start-poap.dto';
 import { GetGuildResponseDto } from '../../api/guilds/dto/get-guild.response.dto';
 
 @Injectable()
 export class StartService {
-  constructor(private commandService: CommandsService) {}
+  constructor() {}
   async initPoapEvent(
     guildMember: GuildMember,
     guildDto: GetGuildResponseDto,

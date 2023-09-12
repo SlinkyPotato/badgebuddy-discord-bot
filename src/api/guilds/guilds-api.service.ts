@@ -14,7 +14,7 @@ export class GuildsApiService {
 
     const getGuildsUrl = `${this.configService.get(
       'BADGE_BUDDY_API_HOST',
-    )}/guilds/guildId`;
+    )}/guilds/${guildId}`;
 
     const axiosResponse = await axios.get(getGuildsUrl);
 
