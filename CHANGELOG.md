@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-3](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.3-2...v0.0.3-3) (2023-09-12)
+
+
+### Performance
+
+* add partial support for bun ([dac7dc6](https://github.com/solidchain-tech/badge-buddy-bot/commit/dac7dc61f25371d0de0294aa5f9c16581cf2af3d))
+
+
+### Refactor
+
+* remove discord events (except for test)' ([416ab6b](https://github.com/solidchain-tech/badge-buddy-bot/commit/416ab6b3415a9ae4c2c114f2225c8c939c93716a))
+
+
+### Tests
+
+* add coverage to bootstrap ([e4721e1](https://github.com/solidchain-tech/badge-buddy-bot/commit/e4721e168b918047e63db00e30a52d78f0423d95))
+
 ### [0.0.3-2](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.3-1...v0.0.3-2) (2023-09-10)
 
 
