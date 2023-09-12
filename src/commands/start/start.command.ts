@@ -16,12 +16,11 @@ import { GuildsApiService } from '../../api/guilds/guilds-api.service';
 // TODO: Add the correct permissions for this command.
 // @Roles(PermissionsBitField.Flags.Administrator)
 export class StartCommand {
-  private readonly logger = new Logger(StartCommand.name);
-
   constructor(
     private guildsApiService: GuildsApiService,
     private commandsService: CommandsService,
     private startService: StartService,
+    private readonly logger: Logger,
   ) {}
 
   @Handler()

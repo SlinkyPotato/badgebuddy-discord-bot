@@ -1,18 +1,17 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { HelpModule } from './help/help.module';
 import { StartModule } from './start/start.module';
 import { EndModule } from './end/end.module';
 import { CommandsService } from './commands.service';
 import { APP_GUARD } from '@nestjs/core';
 import { GuildServerGuard } from './_guards/guild-server.guard';
-import { TestModule } from './test/test.module';
-import { ApiModule } from '../api/api.module';
 
 @Module({
-  imports: [HelpModule, StartModule, EndModule, TestModule, ApiModule],
+  imports: [HelpModule, StartModule, EndModule],
   providers: [
     CommandsService,
     { provide: APP_GUARD, useClass: GuildServerGuard },
+    Logger,
   ],
 })
 export class CommandsModule {}

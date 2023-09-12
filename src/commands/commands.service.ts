@@ -4,7 +4,7 @@ import CommandException from './_exceptions/command.exception';
 
 @Injectable()
 export class CommandsService {
-  private readonly logger: Logger = new Logger(CommandsService.name);
+  constructor(private readonly logger: Logger) {}
 
   validateUserAccess(guildMember: GuildMember, poapManagerRoleId: string) {
     if (guildMember.roles.cache.has(poapManagerRoleId)) {
