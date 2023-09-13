@@ -15,8 +15,7 @@ import CommandException from '../_exceptions/command.exception';
   name: 'start',
   description: 'Begin the community event.',
 })
-@Injectable()
-export class StartService {
+export class StartCommand {
   constructor(
     private eventsApiService: EventsApiService,
     private readonly logger: Logger,
