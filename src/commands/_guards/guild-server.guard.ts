@@ -5,8 +5,6 @@ import CommandException from '../_exceptions/command.exception';
 
 @Injectable()
 export class GuildServerGuard implements CanActivate {
-  constructor() {}
-
   /**
    * Check if the command is being run from a discord server.
    * @param context
