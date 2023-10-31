@@ -1,11 +1,13 @@
 import { Command, Handler } from '@discord-nestjs/core';
+import { Injectable } from '@nestjs/common';
 
 @Command({
   name: 'help',
   description:
     'Information on how to claim, start, stop, and send out POAP links.',
 })
-export class HelpCommand {
+@Injectable()
+export class HelpService {
   static readonly SUPPORT_INVITE = 'https://discord.gg/TPEr4hy32x';
   static readonly FEATURE_REQUEST_CHANNEL_INVITE =
     'https://discord.gg/TPEr4hy32x';
@@ -61,10 +63,10 @@ export class HelpCommand {
             {
               name: '-> Useful Links',
               value:
-                `[DEGEN Support Center](${HelpCommand.SUPPORT_INVITE})\n` +
+                `[DEGEN Support Center](${HelpService.SUPPORT_INVITE})\n` +
                 '[Documents](https://docs.degenapp.com)\n' +
                 '[Feature Request Feedback](' +
-                HelpCommand.FEATURE_REQUEST_CHANNEL_INVITE +
+                HelpService.FEATURE_REQUEST_CHANNEL_INVITE +
                 ')\n' +
                 '[POAP Website](https://poap.xyz/)',
               inline: false,

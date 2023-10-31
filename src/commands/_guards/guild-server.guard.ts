@@ -1,13 +1,10 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { CommandInteraction } from 'discord.js';
 import CommandException from '../_exceptions/command.exception';
 
 @Injectable()
 export class GuildServerGuard implements CanActivate {
-  constructor(private reflector: Reflector) {}
-
   /**
    * Check if the command is being run from a discord server.
    * @param context

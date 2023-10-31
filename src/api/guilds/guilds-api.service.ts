@@ -10,11 +10,11 @@ export class GuildsApiService {
   constructor(private configService: ConfigService, private logger: Logger) {}
 
   async getGuild(guildId: string): Promise<GetGuildResponseDto> {
-    this.logger.log(`attempting to get guildId: ${guildId}`);
+    this.logger.verbose(`attempting to get guild from api guildId: ${guildId}`);
 
     const getGuildsUrl = `${this.configService.get(
       'BADGE_BUDDY_API_HOST',
-    )}/guilds/guildId`;
+    )}/guilds/${guildId}`;
 
     const axiosResponse = await axios.get(getGuildsUrl);
 
@@ -23,7 +23,7 @@ export class GuildsApiService {
       throw new Error(`status code: ${axiosResponse.status}`);
     }
 
-    this.logger.log(`successfully got guildId: ${guildId}`);
+    this.logger.verbose(`successfully got guild, guildId: ${guildId}`);
     return {
       _id: axiosResponse.data._id,
       guildId: axiosResponse.data.guildId,

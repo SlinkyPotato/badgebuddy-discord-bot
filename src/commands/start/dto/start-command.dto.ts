@@ -1,16 +1,16 @@
 import {
-  IsAlphanumeric,
   IsNumberString,
   IsOptional,
+  IsString,
   Max,
   Min,
 } from 'class-validator';
 import { Channel, Param } from '@discord-nestjs/core';
-import { ChannelType, VoiceChannel } from 'discord.js';
+import { ChannelType } from 'discord.js';
 
-export class StartPOAPDto {
-  @IsAlphanumeric('en-US', {
-    message: 'The event name must be alphanumeric and less than 250 chars.',
+export class StartCommandDto {
+  @IsString({
+    message: 'The event name must be less than 250 chars.',
   })
   @Param({
     name: 'title',
@@ -30,7 +30,7 @@ export class StartPOAPDto {
     description: 'Number of minutes event will remain active.',
     required: false,
   })
-  eventDuration: string;
+  eventDuration?: string;
 
   @Param({
     name: 'channel',
@@ -38,5 +38,5 @@ export class StartPOAPDto {
     required: true,
   })
   @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
-  eventChannel: VoiceChannel;
+  eventChannelId: string;
 }
