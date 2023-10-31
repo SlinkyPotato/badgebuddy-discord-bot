@@ -2,7 +2,7 @@
 
 ### OAuth2/Scopes
 - bot
-- applications.commands
+- applications.commands.permissions.update
 
 ### General Permissions
 - Manage Roles
@@ -14,13 +14,12 @@
 - Create Public Threads
 - Create Private Threads
 - Send Messages in Threads
-- Manage Threads
 - Manage Messages
+- Manage Threads
 - Embed Links
 - Attach Files
 - Read Message History
 - Add Reactions
-- Use Slash Commands
 
 Permission Integer: `397553036368`
 
@@ -28,4 +27,5 @@ Permission Integer: `397553036368`
 - Bot > Privileged Gateway Intents > Enable PRESENCE INTENT
 - Bot > Privileged Gateway Intents > SERVER MEMBERS INTENT
 
-Discord Invite Link: `https://discord.com/api/oauth2/authorize?client_id=APP_ID_HERE&permissions=397553036368&scope=bot%20applications.commands`
+Discord Invite Link: `Discord Invite Link: `https://discord.com/api/oauth2/authorize?client_id=CLIENT_ID&permissions=395405552720&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&response_type=code&scope=bot%20applications.commands.permissions.update`
+`
