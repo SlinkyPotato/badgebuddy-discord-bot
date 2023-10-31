@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-4](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-3...v0.0.3-4) (2023-10-31)
+
+
+### Features
+
+* add /setup command ([4ed78ed](https://github.com/SlinkyPotato/badge-buddy-bot/commit/4ed78ed2d72e9082bc405fb5c5b7a14de954b898))
+* add impl for start event command ([c2037c4](https://github.com/SlinkyPotato/badge-buddy-bot/commit/c2037c45822ef7250ce2da6ec00dc45cc3385b81))
+
+
+### Refactor
+
+* create user-auth.guard.ts ([99cd8ae](https://github.com/SlinkyPotato/badge-buddy-bot/commit/99cd8aef5e05080b93bbcab9e88fd01748690f3f))
+
 ### [0.0.3-3](https://github.com/solidchain-tech/badge-buddy-bot/compare/v0.0.3-2...v0.0.3-3) (2023-09-12)
 
 
