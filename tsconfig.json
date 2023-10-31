@@ -18,6 +18,14 @@
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
-    "useDefineForClassFields": true
+    "useDefineForClassFields": true,
+    "paths": {
+      "@lib/common": [
+        "libs/common/src"
+      ],
+      "@lib/common/*": [
+        "libs/common/src/*"
+      ]
+    }
   }
 }
