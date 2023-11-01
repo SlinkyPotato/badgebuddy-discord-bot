@@ -12,7 +12,8 @@
   "engineStrict": true,
   "packageManager": "pnpm@8.10.0",
   "scripts": {
-    "build": "nest build",
+    "build": "nest build --config",
+    "build:prod": "nest build --config nest-cli.prod.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "clean": "rm -rf dist",
     "start": "nest start",
@@ -23,7 +24,6 @@
     "dev:web": "cd ../badge-buddy-web && pnpm dev",
     "start:prod": "node dist/main",
     "start:docker": "docker compose --profile local up --build",
-    "start:bun": "bun run ./dist/min/main.js",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
