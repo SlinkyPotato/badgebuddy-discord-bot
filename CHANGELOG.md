@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-5](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-4...v0.0.3-5) (2023-11-01)
+
+
+### Bug Fixes
+
+* specify node version ([6dc805f](https://github.com/SlinkyPotato/badge-buddy-bot/commit/6dc805ff2fd08a83f1f539244ea3449dc7cf915e))
+* update pnpm lockfile ([11d516b](https://github.com/SlinkyPotato/badge-buddy-bot/commit/11d516b8d590a9b760a2cfda6e31be856bf1f7bb))
+* use specific node version ([baeef88](https://github.com/SlinkyPotato/badge-buddy-bot/commit/baeef88d837f86e1c0719ec7606cf344f9f27b11))
+
+
+### Refactor
+
+* build with swc ([563d1b4](https://github.com/SlinkyPotato/badge-buddy-bot/commit/563d1b45674f26611400d852e388b52583287894))
+* docs and mock /setup impl ([aea2618](https://github.com/SlinkyPotato/badge-buddy-bot/commit/aea2618b9a856572eea123781cfb13e7094e42d2))
+* use 8.x pnpm in engine ([ec0621e](https://github.com/SlinkyPotato/badge-buddy-bot/commit/ec0621ec4afaa582cefbcce4b6deebc8f35321e9))
+
+
+### Performance
+
+* remove sourceMaps for prod ([01ec422](https://github.com/SlinkyPotato/badge-buddy-bot/commit/01ec422e699b9a4dcf86840c7d272f8c8033da3d))
+
 ### [0.0.3-4](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-3...v0.0.3-4) (2023-10-31)
 
 
