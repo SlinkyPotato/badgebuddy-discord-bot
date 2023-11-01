@@ -17,20 +17,33 @@ export class SetupCommand {
 
   @Handler()
   async onSetupCommand(interaction: ChatInputCommandInteraction) {
-    console.log(interaction.token);
-    // TODO: does not work! Requires a bearer token.
-    interaction.guild?.commands.permissions.set({
-      command: interaction.command?.id as string,
-      token: interaction.token as string,
-      permissions: [
-        {
-          id: '159014522542096384',
-          type: ApplicationCommandPermissionType.User,
-          permission: true,
-        },
-      ],
-    });
+    const accessToken = '';
+    console.log('interactionToken: ', interaction.token);
+    console.log('accessToken: ', accessToken);
 
+    const commands = await interaction.guild?.commands.fetch();
+    for (const command of commands?.values() as any) {
+      console.log(command.name);
+    }
+
+    // TODO: does not work! Requires a bearer token.
+
+    // try {
+    //   await interaction.guild?.commands.permissions.set({
+    //     command: interaction.command?.id as string,
+    //     token: accessToken,
+    //     permissions: [
+    //       {
+    //         id: '159014522542096384',
+    //         type: ApplicationCommandPermissionType.User,
+    //         permission: true,
+    //       },
+    //     ],
+    //   });
+    //   console.log('successfully executed setting permissions');
+    // } catch (e) {
+    //   console.error(e);
+    // }
     return 'test';
   }
 }
