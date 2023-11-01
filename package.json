@@ -7,10 +7,10 @@
   "license": "MIT",
   "engines": {
     "node": "20.9.0",
-    "pnpm": "8.x"
+    "pnpm": "8.10.0"
   },
   "engineStrict": true,
-  "packageManager": "pnpm@8.x",
+  "packageManager": "pnpm@8.10.0",
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
