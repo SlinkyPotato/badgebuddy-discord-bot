@@ -12,7 +12,7 @@
   "engineStrict": true,
   "packageManager": "pnpm@8.10.0",
   "scripts": {
-    "build": "nest build --config",
+    "build": "nest build",
     "build:prod": "nest build --config nest-cli.prod.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "clean": "rm -rf dist",
