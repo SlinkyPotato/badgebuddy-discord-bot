@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-6](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-5...v0.0.3-6) (2023-11-04)
+
+
+### Bug Fixes
+
+* gh actions ([e6c0990](https://github.com/SlinkyPotato/badge-buddy-bot/commit/e6c0990cb96b120ec16806c3277fc7917ee99b24))
+* packageManager ([598a07e](https://github.com/SlinkyPotato/badge-buddy-bot/commit/598a07e7e50f503e4ae2e8ba33e96340b971cf6c))
+
+
+### Refactor
+
+* simplify main.ts ([8d44e17](https://github.com/SlinkyPotato/badge-buddy-bot/commit/8d44e17dd7bac32c07c9c44c47d7202879276c5c))
+* update deps and @badgebuddy/common ([3044482](https://github.com/SlinkyPotato/badge-buddy-bot/commit/30444828764b26d4beb8f480606f4e79b673acbc))
+* use common configs ([0c4d6f7](https://github.com/SlinkyPotato/badge-buddy-bot/commit/0c4d6f7df9c7500942cbab4f9981c9137d38322c))
+
 ### [0.0.3-5](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-4...v0.0.3-5) (2023-11-01)
 
 
