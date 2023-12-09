@@ -17,14 +17,13 @@ export class SetupCommand {
 
   @Handler()
   async onSetupCommand(interaction: ChatInputCommandInteraction) {
-    const accessToken = '';
-    console.log('interactionToken: ', interaction.token);
-    console.log('accessToken: ', accessToken);
-
-    const commands = await interaction.guild?.commands.fetch();
-    for (const command of commands?.values() as any) {
-      console.log(command.name);
-    }
+    // const accessToken = '';
+    // console.log('interactionToken: ', interaction.token);
+    // console.log('accessToken: ', accessToken);
+    // console.log(`number of commands: ${commands?.size}`);
+    // for await (const command of commands!.values()) {
+    //   console.log('command: ', command);
+    // }
 
     // TODO: does not work! Requires a bearer token.
 
