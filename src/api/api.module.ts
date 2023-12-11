@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
-import { GuildsApiModule } from './guilds/guilds-api.module';
-import { EventsApiModule } from './events/events-api.module';
+import { DiscordBotApiModule } from '@/api/discord-bot/discord-bot-api.module';
+import { CommunityEventsApiModule } from '@/api/community-events/community-events-api.module';
 
 @Module({
-  imports: [GuildsApiModule, EventsApiModule],
+  imports: [
+    DiscordBotApiModule,
+    CommunityEventsApiModule
+  ],
+  exports: [ApiModule],
 })
 export class ApiModule {}

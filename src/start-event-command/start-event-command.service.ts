@@ -1,0 +1,52 @@
+import { CommandValidationFilter } from '@/command-validation.filter';
+import CommandException from '@/command.exception';
+import { GuildOnlyExecutionGuard } from '@/guild-only-execution.guard';
+import { SlashValidationFilter } from '@/slash-validation.filter';
+import { UserAuthGuard } from '@/user-auth.guard';
+import { SlashCommandPipe } from '@discord-nestjs/common';
+import { Command, Handler, IA } from '@discord-nestjs/core';
+import { Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
+import { Interaction, GuildMember } from 'discord.js';
+import { StartCommandDto } from './dto/start-command.dto';
+import {
+  CommunityEventsApiService
+} from '@/api/community-events/community-events-api.service';
+
+
+@Command({
+  name: 'start',
+  description: 'Begin the community event.',
+})
+export class StartEventCommandService {
+  constructor(
+    private eventsApiService: CommunityEventsApiService,
+    private readonly logger: Logger,
+  ) {}
+
+  @Handler()
+  @UseFilters(SlashValidationFilter, CommandValidationFilter)
+  @UseGuards(GuildOnlyExecutionGuard, UserAuthGuard)
+  async onStartCommand(
+    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartCommandDto,
+    @IA() interaction: Interaction,
+  ) {
+    this.logger.verbose(startCommandDto);
+    startCommandDto.eventDuration ??= '30';
+    try {
+      const communityEvent = await this.eventsApiService.startEvent({
+        guildSId: interaction.guildId?.toString() as string,
+        title: startCommandDto.eventName.toString(),
+        organizerSId: (interaction.member as GuildMember).id.toString() as string,
+        voiceChannelSId: startCommandDto.eventChannelId,
+        endDate: new Date(new Date().getTime() + Number(startCommandDto.eventDuration) * 60000).toISOString(),
+      });
+      this.logger.verbose(communityEvent);
+      return 'Event started!';
+    } catch (e) {
+      this.logger.error(e);
+      throw new CommandException(
+        'Failed to start event. Please contact support.',
+      );
+    }
+  }
+}
