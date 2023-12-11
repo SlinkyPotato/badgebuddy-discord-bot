@@ -3,7 +3,9 @@ import { DiscordBotApiService } from './discord-bot-api.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [
+    ConfigModule
+  ],
   providers: [
     DiscordBotApiService,
     Logger

@@ -33,10 +33,10 @@
     "env:pull": "dotenv-vault pull",
     "env:push": "dotenv-vault push",
     "env:keys": "dotenv-vault keys",
-    "sync": "git fetch && git pull && dotenv-vault pull"
+    "sync": "git fetch && git pull && dotenv-vault pull && pnpm install"
   },
   "dependencies": {
-    "@badgebuddy/common": "2.0.0-26",
+    "@badgebuddy/common": "2.0.0-27",
     "@discord-nestjs/common": "^5.2.10",
     "@discord-nestjs/core": "^5.3.12",
     "@fastify/static": "^6.12.0",

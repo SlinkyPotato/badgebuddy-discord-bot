@@ -3,10 +3,13 @@ import { CommunityEventsApiService } from './community-events-api.service';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule],
+  imports: [
+    ConfigModule
+  ],
   providers: [
     CommunityEventsApiService,
-    Logger],
+    Logger,
+  ],
   exports: [CommunityEventsApiService],
 })
 export class CommunityEventsApiModule {}

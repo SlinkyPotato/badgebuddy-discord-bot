@@ -2,19 +2,18 @@ import { CommandValidationFilter } from '@/command-validation.filter';
 import CommandException from '@/command.exception';
 import { GuildOnlyExecutionGuard } from '@/guild-only-execution.guard';
 import { SlashValidationFilter } from '@/slash-validation.filter';
-import { UserAuthGuard } from '@/user-auth.guard';
 import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
-import { Interaction, GuildMember } from 'discord.js';
-import { StartCommandDto } from './dto/start-command.dto';
+import { Interaction } from 'discord.js';
+import { StartEventDto } from './dto/start-event.dto';
 import {
   CommunityEventsApiService
 } from '@/api/community-events/community-events-api.service';
 
 
 @Command({
-  name: 'start',
+  name: 'start-event',
   description: 'Begin the community event.',
 })
 export class StartEventCommandService {
@@ -25,22 +24,22 @@ export class StartEventCommandService {
 
   @Handler()
   @UseFilters(SlashValidationFilter, CommandValidationFilter)
-  @UseGuards(GuildOnlyExecutionGuard, UserAuthGuard)
+  @UseGuards(GuildOnlyExecutionGuard)
   async onStartCommand(
-    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartCommandDto,
+    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartEventDto,
     @IA() interaction: Interaction,
   ) {
     this.logger.verbose(startCommandDto);
     startCommandDto.eventDuration ??= '30';
     try {
-      const communityEvent = await this.eventsApiService.startEvent({
-        guildSId: interaction.guildId?.toString() as string,
-        title: startCommandDto.eventName.toString(),
-        organizerSId: (interaction.member as GuildMember).id.toString() as string,
-        voiceChannelSId: startCommandDto.eventChannelId,
-        endDate: new Date(new Date().getTime() + Number(startCommandDto.eventDuration) * 60000).toISOString(),
-      });
-      this.logger.verbose(communityEvent);
+      // const communityEvent = await this.eventsApiService.startEvent({
+      //   guildSId: interaction.guildId?.toString() as string,
+      //   title: startCommandDto.eventName.toString(),
+      //   organizerSId: (interaction.member as GuildMember).id.toString() as string,
+      //   voiceChannelSId: startCommandDto.eventChannelId,
+      //   endDate: new Date(new Date().getTime() + Number(startCommandDto.eventDuration) * 60000).toISOString(),
+      // });
+      // this.logger.verbose(communityEvent);
       return 'Event started!';
     } catch (e) {
       this.logger.error(e);
