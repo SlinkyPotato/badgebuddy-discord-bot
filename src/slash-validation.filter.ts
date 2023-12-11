@@ -21,11 +21,12 @@ export class SlashValidationFilter implements ExceptionFilter {
           .setTitle('Validation Error')
           .setColor(Colors.Red)
           .addFields(
-            Object.values(exception.constraints).map((constraint) => {
-              return {
-                name: exception.property,
-                value: constraint,
-              };
+            Object.values(exception.constraints)
+              .map((constraint) => {
+                return {
+                  name: exception.property,
+                  value: constraint,
+                };
             }),
           );
       });

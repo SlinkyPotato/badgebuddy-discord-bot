@@ -4,7 +4,7 @@ import { WrongArgsException } from '@discord-nestjs/common';
 import CommandException from './command.exception';
 
 @Catch(CommandException)
-export class CommandValidationFilter implements ExceptionFilter {
+export class CommandExceptionFilter implements ExceptionFilter {
   async catch(
     slashError: CommandException | WrongArgsException,
     host: ArgumentsHost,

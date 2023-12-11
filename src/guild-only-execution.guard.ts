@@ -4,7 +4,7 @@ import { CommandInteraction } from 'discord.js';
 import CommandException from './command.exception';
 
 @Injectable()
-export class GuildOnlyExecutionGuard implements CanActivate {
+export class GuildOnlyGuard implements CanActivate {
   /**
    * Check if the command is being run from a discord server.
    * @param context
