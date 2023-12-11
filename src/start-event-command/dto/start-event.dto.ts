@@ -14,12 +14,12 @@ export class StartEventDto {
   })
   @Param({
     name: 'title',
-    description: 'The name of the event.',
+    description: 'The title of the event.',
     required: true,
     maxLength: 250,
     minLength: 1,
   })
-  eventName: string;
+  title: string;
 
   @Min(10)
   @Max(720)
@@ -30,7 +30,7 @@ export class StartEventDto {
     description: 'Number of minutes event will remain active.',
     required: false,
   })
-  eventDuration?: string;
+  durationInMinutes?: string;
 
   @Param({
     name: 'channel',
@@ -38,5 +38,5 @@ export class StartEventDto {
     required: true,
   })
   @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
-  eventChannelId: string;
+  voiceChannelId: string;
 }
