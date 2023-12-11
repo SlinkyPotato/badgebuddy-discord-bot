@@ -8,7 +8,7 @@ import {
 import { Channel, Param } from '@discord-nestjs/core';
 import { ChannelType } from 'discord.js';
 
-export class StartEventDto {
+export class StartEventSlashDto {
   @IsString({
     message: 'The event name must be less than 250 chars.',
   })

@@ -6,10 +6,10 @@ import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { Injectable, Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
 import { APIEmbed, ChatInputCommandInteraction, Colors, GuildMember, InteractionReplyOptions } from 'discord.js';
-import { StartEventDto } from './dto/start-event.dto';
+import { StartEventSlashDto } from './dto/start-event-slash.dto';
 import {
-  CommunityEventsApiService
-} from '@/api/community-events/community-events-api.service';
+  CommunityEventsManageApiService
+} from '@/api/community-events-manage/community-events-manage-api.service';
 
 @Command({
   name: 'start-event',
@@ -18,7 +18,7 @@ import {
 @Injectable()
 export class StartEventCommandService {
   constructor(
-    private readonly eventsApiService: CommunityEventsApiService,
+    private readonly eventsApiService: CommunityEventsManageApiService,
     private readonly logger: Logger,
   ) {}
 
@@ -26,7 +26,7 @@ export class StartEventCommandService {
   @UseFilters(SlashValidationFilter, CommandExceptionFilter)
   @UseGuards(GuildOnlyGuard)
   async onStartCommand(
-    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartEventDto,
+    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartEventSlashDto,
     @IA() interaction: ChatInputCommandInteraction,
   ): Promise<InteractionReplyOptions> {
     this.logger.verbose(startCommandDto);

@@ -1,0 +1,1 @@
+export const ENV_BADGE_BUDDY_API_HOST = 'BADGE_BUDDY_API_HOST' as const;

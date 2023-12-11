@@ -1,12 +1,12 @@
 import { Logger, Module } from '@nestjs/common';
 import { EndEventCommandService } from './end-event-command.service';
 import { DiscordModule } from '@discord-nestjs/core';
-import { CommunityEventsApiModule } from '@/api/community-events/community-events-api.module';
+import { CommunityEventsManageApiModule } from '@/api/community-events-manage/community-events-manage-api.module';
 
 @Module({
   imports: [
     DiscordModule.forFeature(),
-    CommunityEventsApiModule
+    CommunityEventsManageApiModule
   ],
   providers: [
     Logger,

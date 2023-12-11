@@ -1,18 +1,20 @@
 import { afterEach, beforeEach, jest } from '@jest/globals';
-import { CommunityEventsApiService } from './community-events-api.service';
+import { CommunityEventsManageApiService } from './community-events-manage-api.service';
 import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
-import { PostEventsRequestDto } from './dto/post-events.request.dto';
-import { PostEventsResponseDto } from './dto/post-events.response.dto';
 import axios from 'axios';
-import { PutEventsRequestDto } from './dto/put-events.request.dto';
-import { PutEventsResponseDto } from './dto/put-events.response.dto';
+import {
+  DiscordCommunityEventPostRequestDto,
+  DiscordCommunityEventPostResponseDto,
+  DiscordCommunityEventPatchRequestDto,
+  DiscordCommunityEventPatchResponseDto,
+} from '@badgebuddy/common';
 
 jest.mock('axios');
 
-describe('EventsApiService', () => {
-  let service: CommunityEventsApiService;
+describe('CommunityEventsManageApiService', () => {
+  let service: CommunityEventsManageApiService;
 
   const mockConfigService = {
     get: jest.fn().mockReturnThis(),
@@ -27,13 +29,13 @@ describe('EventsApiService', () => {
   beforeEach(async () => {
     const testModule = await Test.createTestingModule({
       providers: [
-        CommunityEventsApiService,
+        CommunityEventsManageApiService,
         { provide: ConfigService, useValue: mockConfigService },
         { provide: Logger, useValue: mockLogger },
       ],
     }).compile();
 
-    service = testModule.get<CommunityEventsApiService>(CommunityEventsApiService);
+    service = testModule.get<CommunityEventsManageApiService>(CommunityEventsManageApiService);
   });
 
   afterEach(() => {
@@ -44,20 +46,20 @@ describe('EventsApiService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('postEvent', () => {
+  describe('startEvent', () => {
     it('should be defined', () => {
       expect(service.startEvent).toBeDefined();
     });
 
     it('should call service.postEvent() and return PostEventsResponseDto', async () => {
-      const mockRequest: PostEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPostRequestDto = {
         guildId: '850840267082563596',
         eventName: 'test event',
         organizerId: '850843847082563596',
         voiceChannelId: '850843844852563596',
         duration: 30,
       };
-      const mockResponse: PostEventsResponseDto = {
+      const mockResponse: DiscordCommunityEventPostResponseDto = {
         _id: '60b6d7d8a1c5c31b7b6f0f5a',
         startDate: '2021-06-01T00:00:00.000Z',
         endDate: '2021-06-01T23:59:59.999Z',
@@ -73,7 +75,7 @@ describe('EventsApiService', () => {
     });
 
     it('should throw axios error', async () => {
-      const mockRequest: PostEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPostRequestDto = {
         guildId: '850840267082563596',
         eventName: 'test event',
         organizerId: '850843847082563596',
@@ -91,7 +93,7 @@ describe('EventsApiService', () => {
     });
 
     it('should return status !== 201', async () => {
-      const mockRequest: PostEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPostRequestDto = {
         guildId: '850840267082563596',
         eventName: 'test event',
         organizerId: '850843847082563596',
@@ -108,19 +110,19 @@ describe('EventsApiService', () => {
     });
   });
 
-  describe('putEvent', () => {
+  describe('endEvent', () => {
     it('should be defined', () => {
       expect(service.endEvent).toBeDefined();
     });
 
     it('should call service.putEvent() and return response', async () => {
-      const mockRequest: PutEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPatchRequestDto = {
         _id: '60b6d7d8a1c5c31b7b6f0f5a',
         guildId: '850840267082563596 ',
         organizerId: '850843847082563596',
         voiceChannelId: '850843844852563596',
       };
-      const mockResponse: PutEventsResponseDto = {
+      const mockResponse: DiscordCommunityEventPatchResponseDto = {
         _id: '60b6d7d8a1c5c31b7b6f0f5a',
         isActive: false,
       };
@@ -133,7 +135,7 @@ describe('EventsApiService', () => {
     });
 
     it('should throw axios error', async () => {
-      const mockRequest: PutEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPatchRequestDto = {
         _id: '60b6d7d8a1c5c31b7b6f0f5a',
         guildId: '850840267082563596 ',
         organizerId: '850843847082563596',
@@ -150,7 +152,7 @@ describe('EventsApiService', () => {
     });
 
     it('should return status !== 200', async () => {
-      const mockRequest: PutEventsRequestDto = {
+      const mockRequest: DiscordCommunityEventPatchRequestDto = {
         _id: '60b6d7d8a1c5c31b7b6f0f5a',
         guildId: '850840267082563596 ',
         organizerId: '850843847082563596',

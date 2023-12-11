@@ -1,3 +1,4 @@
+import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
 import {
   DiscordCommunityEventPatchRequestDto,
   DiscordCommunityEventPatchResponseDto,
@@ -9,7 +10,9 @@ import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
 @Injectable()
-export class CommunityEventsApiService {
+export class CommunityEventsManageApiService {
+  static readonly BASE_PATH = '/discord/community-events/manage' as const;
+
   constructor(
     private configService: ConfigService, private logger: Logger
   ) {}
@@ -19,8 +22,8 @@ export class CommunityEventsApiService {
   ): Promise<DiscordCommunityEventPostResponseDto> {
     this.logger.log('attempting to call post events endpoint');
     const postEventsUrl = `${this.configService.get(
-      'BADGE_BUDDY_API_HOST',
-    )}/events`;
+      ENV_BADGE_BUDDY_API_HOST,
+    )}${CommunityEventsManageApiService.BASE_PATH}}`;
     try {
       const response = await axios.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request);
       if (response.status !== 201) {
@@ -40,8 +43,8 @@ export class CommunityEventsApiService {
   ): Promise<DiscordCommunityEventPatchResponseDto> {
     this.logger.log('attempting to call put events endpoint');
     const url = `${this.configService.get(
-      'BADGE_BUDDY_API_HOST',
-    )}/events`;
+      ENV_BADGE_BUDDY_API_HOST,
+    )}${CommunityEventsManageApiService.BASE_PATH}`;
     try {
       const response = await axios.patch<DiscordCommunityEventPatchResponseDto>(url, request);
       if (response.status !== 200) {

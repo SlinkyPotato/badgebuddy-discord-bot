@@ -3,12 +3,13 @@ import axios from 'axios';
 import { ConfigService } from '@nestjs/config';
 import {
   DiscordBotSettingsGetResponseDto,
-  DiscordBotPostRequestDto,
-  DiscordBotPostResponseDto,
 } from '@badgebuddy/common';
+import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
 
 @Injectable()
 export class DiscordBotApiService {
+  static readonly BASE_PATH = '/discord/bot' as const;
+
   constructor(
     private configService: ConfigService, private logger: Logger
   ) {}
@@ -19,8 +20,8 @@ export class DiscordBotApiService {
     this.logger.verbose(`attempting to get guild from api guildId: ${guildId}`);
 
     const getGuildsUrl = `${this.configService.get(
-      'BADGE_BUDDY_API_HOST',
-    )}/discord/bot/settings?guildSId=${guildId}`;
+      ENV_BADGE_BUDDY_API_HOST,
+    )}${DiscordBotApiService.BASE_PATH}/settings?guildSId=${guildId}`;
 
     try {
       const axiosResponse = await axios.get<DiscordBotSettingsGetResponseDto>(getGuildsUrl);
@@ -37,34 +38,4 @@ export class DiscordBotApiService {
     }
   }
 
-  async postGuild(
-    request: DiscordBotPostRequestDto
-  ): Promise<DiscordBotPostResponseDto> {
-    this.logger.log('attempting to post guild endpoint');
-
-    const postGuildsUrl = `${this.configService.get(
-      'BADGE_BUDDY_API_HOST',
-    )}/guilds/${request.guildSId}`;
-    const axiosResponse = await axios.post<DiscordBotPostResponseDto>(postGuildsUrl, request);
-
-    if (axiosResponse.status !== 201) {
-      this.logger.verbose(axiosResponse);
-      throw new Error(`status code: ${axiosResponse.status}`);
-    }
-
-    this.logger.log('successfully created guild');
-    return axiosResponse.data;
-  }
-
-  async deleteGuild(guildId: string): Promise<void> {
-    this.logger.log(`attempting to remove guildId: ${guildId}`);
-    const deleteGuildsUrl = `${this.configService.get(
-      'BADGE_BUDDY_API_HOST',
-    )}/guilds/${guildId}`;
-    const response = await axios.delete(deleteGuildsUrl);
-    if (response.status !== 204) {
-      throw new Error(`status code: ${response.status}`);
-    }
-    this.logger.log(`successfully removed guildId: ${guildId}`);
-  }
 }
