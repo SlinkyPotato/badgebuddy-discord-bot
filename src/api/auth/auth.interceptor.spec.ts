@@ -1,7 +1,7 @@
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthRequestInterceptor } from './auth-request.interceptor';
 
 describe('AuthInterceptor', () => {
   it('should be defined', () => {
-    expect(new AuthInterceptor()).toBeDefined();
+    expect(new AuthRequestInterceptor()).toBeDefined();
   });
 });

@@ -8,7 +8,8 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthInterceptor } from '../auth/auth.interceptor';
+import { AuthRequestInterceptor } from '../auth/auth-request.interceptor';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class CommunityEventsManageApiService {
@@ -17,11 +18,10 @@ export class CommunityEventsManageApiService {
   constructor(
     private configService: ConfigService, private logger: Logger,
     private readonly httpService: HttpService,
-    private readonly authInterceptor: AuthInterceptor,
+    private readonly authInterceptor: AuthRequestInterceptor,
   ) {
     this.httpService.axiosRef.interceptors.request.use((config) => {
-      config.headers['Content-Type'] = 'application/json';
-      return config;
+      return this.authInterceptor.intercept(config);
     });
   }
 
@@ -33,7 +33,7 @@ export class CommunityEventsManageApiService {
       ENV_BADGE_BUDDY_API_HOST,
     )}${CommunityEventsManageApiService.BASE_PATH}}`;
     try {
-      const response = await this.httpService.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request);
+      const response = await firstValueFrom(this.httpService.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request));
       if (response.status !== 201) {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);
@@ -54,10 +54,10 @@ export class CommunityEventsManageApiService {
       ENV_BADGE_BUDDY_API_HOST,
     )}${CommunityEventsManageApiService.BASE_PATH}`;
     try {
-      const response = await axios.patch<DiscordCommunityEventPatchResponseDto>(url, {
+      const response = await firstValueFrom(this.httpService.patch<DiscordCommunityEventPatchResponseDto>(url, {
         organizerSId,
         ...request
-      });
+      }));
       if (response.status !== 200) {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);

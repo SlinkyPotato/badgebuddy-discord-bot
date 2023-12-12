@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthRequestInterceptor } from './auth-request.interceptor';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -18,11 +18,11 @@ import { ConfigModule } from '@nestjs/config';
   ],
   providers: [
     AuthService,
-    AuthInterceptor,
+    AuthRequestInterceptor,
   ],
   exports: [
     AuthService,
-    AuthInterceptor,
+    AuthRequestInterceptor,
   ],
 })
 export class AuthModule {}
