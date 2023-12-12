@@ -5,17 +5,25 @@ import {
   DiscordCommunityEventPostRequestDto,
   DiscordCommunityEventPostResponseDto
 } from '@badgebuddy/common';
+import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
+import { AuthInterceptor } from '../auth/auth.interceptor';
 
 @Injectable()
 export class CommunityEventsManageApiService {
   static readonly BASE_PATH = '/discord/community-events/manage' as const;
 
   constructor(
-    private configService: ConfigService, private logger: Logger
-  ) {}
+    private configService: ConfigService, private logger: Logger,
+    private readonly httpService: HttpService,
+    private readonly authInterceptor: AuthInterceptor,
+  ) {
+    this.httpService.axiosRef.interceptors.request.use((config) => {
+      config.headers['Content-Type'] = 'application/json';
+      return config;
+    });
+  }
 
   async startEvent(
     request: DiscordCommunityEventPostRequestDto,
@@ -25,7 +33,7 @@ export class CommunityEventsManageApiService {
       ENV_BADGE_BUDDY_API_HOST,
     )}${CommunityEventsManageApiService.BASE_PATH}}`;
     try {
-      const response = await axios.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request);
+      const response = await this.httpService.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request);
       if (response.status !== 201) {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);
@@ -39,14 +47,17 @@ export class CommunityEventsManageApiService {
   }
 
   async endEvent(
-    request: DiscordCommunityEventPatchRequestDto
+    organizerSId: string, request: DiscordCommunityEventPatchRequestDto
   ): Promise<DiscordCommunityEventPatchResponseDto> {
     this.logger.log('attempting to call put events endpoint');
     const url = `${this.configService.get(
       ENV_BADGE_BUDDY_API_HOST,
     )}${CommunityEventsManageApiService.BASE_PATH}`;
     try {
-      const response = await axios.patch<DiscordCommunityEventPatchResponseDto>(url, request);
+      const response = await axios.patch<DiscordCommunityEventPatchResponseDto>(url, {
+        organizerSId,
+        ...request
+      });
       if (response.status !== 200) {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);
