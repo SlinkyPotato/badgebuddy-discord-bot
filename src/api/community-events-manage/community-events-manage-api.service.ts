@@ -6,42 +6,50 @@ import {
   DiscordCommunityEventPostResponseDto
 } from '@badgebuddy/common';
 import { HttpService } from '@nestjs/axios';
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthRequestInterceptor } from '../auth/auth-request.interceptor';
 import { firstValueFrom } from 'rxjs';
+import { AuthResponseInterceptor } from '../auth/auth-response.interceptor';
 
 @Injectable()
-export class CommunityEventsManageApiService {
+export class CommunityEventsManageApiService implements OnModuleInit {
   static readonly BASE_PATH = '/discord/community-events/manage' as const;
 
   constructor(
-    private configService: ConfigService, private logger: Logger,
+    private configService: ConfigService,
+    private logger: Logger,
     private readonly httpService: HttpService,
-    private readonly authInterceptor: AuthRequestInterceptor,
-  ) {
+    private readonly authRequestInterceptor: AuthRequestInterceptor,
+    private readonly authResponseInterceptor: AuthResponseInterceptor,
+  ) {}
+
+  onModuleInit() {
     this.httpService.axiosRef.interceptors.request.use((config) => {
-      return this.authInterceptor.intercept(config);
+      return this.authRequestInterceptor.intercept(config);
+    });
+    this.httpService.axiosRef.interceptors.response.use((response) => response, (errorResponse) => {
+      return this.authResponseInterceptor.intercept(errorResponse);
     });
   }
 
   async startEvent(
     request: DiscordCommunityEventPostRequestDto,
   ): Promise<DiscordCommunityEventPostResponseDto> {
-    this.logger.log('attempting to call post events endpoint');
+    this.logger.verbose(`attempting to call post events endpoint, request :${request}`);
     const postEventsUrl = `${this.configService.get(
       ENV_BADGE_BUDDY_API_HOST,
-    )}${CommunityEventsManageApiService.BASE_PATH}}`;
+    )}${CommunityEventsManageApiService.BASE_PATH}`;
     try {
       const response = await firstValueFrom(this.httpService.post<DiscordCommunityEventPostResponseDto>(postEventsUrl, request));
       if (response.status !== 201) {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);
       }
-      this.logger.log(`successfully created event: ${response.data.communityEventId}`);
+      this.logger.verbose(`successfully called post events endpoint, response: ${response.data}`);
       return response.data;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(`failed to start event for guild: ${request.guildSId}, organizer: ${request.organizerSId}`);
       throw error;
     }
   }
@@ -65,7 +73,7 @@ export class CommunityEventsManageApiService {
       this.logger.log(`successfully stopped event: ${response.data.communityEventId}`);
       return response.data;
     } catch (error) {
-      this.logger.error(error);
+      this.logger.error(`failed to end event for guild: ${request.guildSId}, organizer: ${organizerSId}`);
       throw error;
     }
   }

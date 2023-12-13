@@ -1,7 +1,5 @@
-import { CommandExceptionFilter } from '@/command-validation.filter';
-import CommandException from '@/command.exception';
-import { GuildOnlyGuard as GuildOnlyGuard } from '@/guild-only-execution.guard';
-import { SlashValidationFilter } from '@/slash-validation.filter';
+import { GuildOnlyGuard as GuildOnlyGuard } from '@/guards/guild-only-execution.guard';
+import { SlashValidationFilter } from '@/filters/slash-validation.filter';
 import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { Injectable, Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
@@ -10,6 +8,8 @@ import { StartEventSlashDto } from './dto/start-event-slash.dto';
 import {
   CommunityEventsManageApiService
 } from '@/api/community-events-manage/community-events-manage-api.service';
+import { SlashExceptionFilter } from '@/filters/slash-exception.filter';
+import { SlashException } from '@/exceptions/slash.exception';
 
 @Command({
   name: 'start-event',
@@ -23,22 +23,23 @@ export class StartEventCommandService {
   ) {}
 
   @Handler()
-  @UseFilters(SlashValidationFilter, CommandExceptionFilter)
+  @UseFilters(SlashValidationFilter, SlashExceptionFilter)
   @UseGuards(GuildOnlyGuard)
   async onStartCommand(
     @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartEventSlashDto,
     @IA() interaction: ChatInputCommandInteraction,
   ): Promise<InteractionReplyOptions> {
+    this.logger.log(`attempting to start event for guild: ${interaction.guildId} and organizer: ${interaction.member?.user.id}`);
     this.logger.verbose(startCommandDto);
     startCommandDto.durationInMinutes ??= '30';
     try {
-    
+
       const communityEvent = await this.eventsApiService.startEvent({
         guildSId: interaction.guildId?.toString() as string,
         title: startCommandDto.title.toString(),
         organizerSId: (interaction.member as GuildMember).id.toString() as string,
         voiceChannelSId: startCommandDto.voiceChannelId,
-        endDate: new Date(new Date().getTime() + Number(startCommandDto.durationInMinutes) * 60000).toISOString(),
+        endDate: new Date(new Date().getTime() + Number(startCommandDto.durationInMinutes) * 60_000).toISOString(),
       });
     
       const voiceChannelName = interaction.guild?.channels.cache.get(startCommandDto.voiceChannelId)?.name as string;
@@ -56,8 +57,13 @@ export class StartEventCommandService {
       this.logger.log(`successfully started event: ${communityEvent.communityEventId}`);
       return { embeds: [startEventMsg] };
     } catch (e) {
-      this.logger.error(e);
-      throw new CommandException(
+      this.logger.error(JSON.stringify(e));
+      if (e.response?.status === 409) {
+        throw new SlashException(
+          'An event is already in progress. Please end the current event before starting a new one.',
+        );
+      }
+      throw new SlashException(
         'Failed to start event. Please contact support.',
       );
     }

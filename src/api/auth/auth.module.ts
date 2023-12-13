@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthRequestInterceptor } from './auth-request.interceptor';
 import { ConfigModule } from '@nestjs/config';
+import { AuthResponseInterceptor } from './auth-response.interceptor';
 
 @Module({
   imports: [
@@ -17,12 +18,15 @@ import { ConfigModule } from '@nestjs/config';
     }),
   ],
   providers: [
+    Logger,
     AuthService,
     AuthRequestInterceptor,
+    AuthResponseInterceptor,
   ],
   exports: [
     AuthService,
     AuthRequestInterceptor,
+    AuthResponseInterceptor,
   ],
 })
 export class AuthModule {}

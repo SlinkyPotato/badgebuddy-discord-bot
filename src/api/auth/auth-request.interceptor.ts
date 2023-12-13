@@ -1,5 +1,5 @@
 import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from './auth.service';
 import { InternalAxiosRequestConfig } from 'axios';
@@ -8,16 +8,17 @@ import { InternalAxiosRequestConfig } from 'axios';
 export class AuthRequestInterceptor {
 
   constructor(
+    private readonly logger: Logger,
     private readonly configService: ConfigService,
     private authService: AuthService,
   ) {}
 
   intercept(config: InternalAxiosRequestConfig<any>) {
-    const url = config.baseURL;
-
+    const url = config.url;
     const bbBaseUrl = this.configService.get<string>(ENV_BADGE_BUDDY_API_HOST);
 
     if (!url || !url.startsWith(`${bbBaseUrl}`)) {
+      this.logger.verbose('skip intercepting request');
       return config;
     }
 
@@ -29,6 +30,7 @@ export class AuthRequestInterceptor {
     const authToken = this.authService.generateToken(discordUserSId);
 
     config.headers['Authorization'] = `Bearer ${authToken}`;
+    this.logger.verbose(`intercepted request: ${url}`);
     return config;
   }
 }

@@ -5,6 +5,7 @@ import { Colors, EmbedBuilder } from 'discord.js';
 
 @Catch(WrongArgsException)
 export class SlashValidationFilter implements ExceptionFilter {
+  
   async catch(
     exceptionList: WrongArgsException,
     host: ArgumentsHost,
