@@ -21,6 +21,14 @@ export class StartEventSlashDto {
   })
   title: string;
 
+  @Param({
+    name: 'channel',
+    description: 'The voice channel or stage for event tracking.',
+    required: true,
+  })
+  @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
+  voiceChannelId: string;
+
   @Min(10)
   @Max(720)
   @IsNumberString()
@@ -32,11 +40,13 @@ export class StartEventSlashDto {
   })
   durationInMinutes?: string;
 
+  @IsString()
+  @IsOptional()
   @Param({
-    name: 'channel',
-    description: 'The voice channel or stage for event tracking.',
-    required: true,
+    name: 'description',
+    description: 'A description of the event.',
+    required: false,
   })
-  @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
-  voiceChannelId: string;
+  description?: string;
+
 }

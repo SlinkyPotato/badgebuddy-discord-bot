@@ -46,7 +46,7 @@ export class CommunityEventsManageApiService implements OnModuleInit {
         this.logger.verbose(response);
         throw new Error(`status code: ${response.status}`);
       }
-      this.logger.verbose(`successfully called post events endpoint, response: ${response.data}`);
+      this.logger.verbose(`successfully called post events endpoint, response: ${JSON.stringify(response.data)}`);
       return response.data;
     } catch (error) {
       this.logger.error(`failed to start event for guild: ${request.guildSId}, organizer: ${request.organizerSId}`);

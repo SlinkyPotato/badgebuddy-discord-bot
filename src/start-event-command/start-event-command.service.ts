@@ -40,6 +40,7 @@ export class StartEventCommandService {
         organizerSId: (interaction.member as GuildMember).id.toString() as string,
         voiceChannelSId: startCommandDto.voiceChannelId,
         endDate: new Date(new Date().getTime() + Number(startCommandDto.durationInMinutes) * 60_000).toISOString(),
+        description: startCommandDto.description,
       });
     
       const voiceChannelName = interaction.guild?.channels.cache.get(startCommandDto.voiceChannelId)?.name as string;
@@ -52,12 +53,15 @@ export class StartEventCommandService {
         guildName,
         voiceChannelName,
         Number(startCommandDto.durationInMinutes),
+        startCommandDto.description,
       );
 
       this.logger.log(`successfully started event: ${communityEvent.communityEventId}`);
-      return { embeds: [startEventMsg] };
+      return {
+        embeds: [startEventMsg]
+      };
     } catch (e) {
-      this.logger.error(JSON.stringify(e));
+      this.logger.error(e);
       if (e.response?.status === 409) {
         throw new SlashException(
           'An event is already in progress. Please end the current event before starting a new one.',
@@ -75,12 +79,14 @@ export class StartEventCommandService {
     guildName: string,
     voiceChannelName: string,
     durationInMinutes: number,
+    description?: string,
   ): APIEmbed {
     return {
-      title: 'Community Event Started',
+      title,
       color: Colors.Green,
+      description,
       fields: [
-        { name: 'Event', value: `${title} `, inline: true },
+        { name: 'Status', value: 'Community event started', inline: true },
         { name: 'Organizer', value: `${userTag} `, inline: true },
         { name: 'Discord Server', value: `${guildName} `, inline: true },
         { name: 'Voice Channel', value: `🎙️${voiceChannelName}`, inline: true },
