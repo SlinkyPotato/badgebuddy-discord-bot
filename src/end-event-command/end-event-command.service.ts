@@ -35,11 +35,13 @@ export class EndEventCommandService {
       const response = await this.eventsApiService.endEvent(interaction.member!.user.id, {
         guildSId: interaction.guild!.id,
         voiceChannelSId: endEventDto.voiceChannelId,
+        poapLinksUrl: endEventDto.poapLinks?.url,
       });
 
       const voiceChannelName = interaction.guild?.channels.cache.get(endEventDto.voiceChannelId)?.name as string;
       const durationInMinutes = Math.round((new Date(response.endDate).getTime() - new Date(response.startDate).getTime()) / 60_000);
       const endEventMsg = this.getEndEventMsg(
+        response.communityEventId,
         response.title,
         response.organizerUsername,
         interaction.guild!.name,
@@ -63,6 +65,7 @@ export class EndEventCommandService {
   }
 
   private getEndEventMsg (
+    communityEventId: string,
     title: string,
     userTag: string,
     guildName: string,
@@ -75,6 +78,7 @@ export class EndEventCommandService {
       color: Colors.DarkRed,
       description,
       fields: [
+        { name: 'ID', value: `${communityEventId}`, inline: true },
         { name: 'Status', value: 'Community event ended', inline: true },
         { name: 'Organizer', value: `${userTag} `, inline: true },
         { name: 'Discord Server', value: `${guildName} `, inline: true },

@@ -5,8 +5,8 @@ import {
   Max,
   Min,
 } from 'class-validator';
-import { Channel, Param } from '@discord-nestjs/core';
-import { ChannelType } from 'discord.js';
+import { Channel, Param, ParamType } from '@discord-nestjs/core';
+import { Attachment, ChannelType } from 'discord.js';
 
 export class StartEventSlashDto {
   @IsString({
@@ -38,7 +38,7 @@ export class StartEventSlashDto {
     description: 'Number of minutes event will remain active.',
     required: false,
   })
-  durationInMinutes?: string;
+  durationInMinutes: string = '30';
 
   @IsString()
   @IsOptional()
@@ -49,4 +49,13 @@ export class StartEventSlashDto {
   })
   description?: string;
 
+  @IsString()
+  @IsOptional()
+  @Param({
+    name: 'links_txt',
+    description: 'A list of poaps to be awarded to participants.',
+    required: false,
+    type: ParamType.ATTACHMENT,
+  })
+  poapLinks?: Attachment;
 }

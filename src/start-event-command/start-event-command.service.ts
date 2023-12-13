@@ -26,37 +26,38 @@ export class StartEventCommandService {
   @UseFilters(SlashValidationFilter, SlashExceptionFilter)
   @UseGuards(GuildOnlyGuard)
   async onStartCommand(
-    @IA(SlashCommandPipe, ValidationPipe) startCommandDto: StartEventSlashDto,
+    @IA(SlashCommandPipe, ValidationPipe) startEventDto: StartEventSlashDto,
     @IA() interaction: ChatInputCommandInteraction,
   ): Promise<InteractionReplyOptions> {
     this.logger.log(`attempting to start event for guild: ${interaction.guildId} and organizer: ${interaction.member?.user.id}`);
-    this.logger.verbose(startCommandDto);
-    startCommandDto.durationInMinutes ??= '30';
+    this.logger.verbose(startEventDto);
+    
     try {
-
-      const communityEvent = await this.eventsApiService.startEvent({
+      const response = await this.eventsApiService.startEvent({
         guildSId: interaction.guildId?.toString() as string,
-        title: startCommandDto.title.toString(),
+        title: startEventDto.title.toString(),
         organizerSId: (interaction.member as GuildMember).id.toString() as string,
-        voiceChannelSId: startCommandDto.voiceChannelId,
-        endDate: new Date(new Date().getTime() + Number(startCommandDto.durationInMinutes) * 60_000).toISOString(),
-        description: startCommandDto.description,
+        voiceChannelSId: startEventDto.voiceChannelId,
+        endDate: new Date(new Date().getTime() + Number(startEventDto.durationInMinutes) * 60_000).toISOString(),
+        description: startEventDto.description,
+        poapLinksUrl: startEventDto.poapLinks?.url,
       });
     
-      const voiceChannelName = interaction.guild?.channels.cache.get(startCommandDto.voiceChannelId)?.name as string;
+      const voiceChannelName = interaction.guild?.channels.cache.get(startEventDto.voiceChannelId)?.name as string;
       const guildName = interaction.guild?.name as string;
       const userTag = (interaction.member as GuildMember).user.tag;
       
       const startEventMsg = this.getStartEventMsg(
-        startCommandDto.title,
+        response.communityEventId,
+        startEventDto.title,
         userTag,
         guildName,
         voiceChannelName,
-        Number(startCommandDto.durationInMinutes),
-        startCommandDto.description,
+        Number(startEventDto.durationInMinutes),
+        startEventDto.description,
       );
 
-      this.logger.log(`successfully started event: ${communityEvent.communityEventId}`);
+      this.logger.log(`successfully started event: ${response.communityEventId}`);
       return {
         embeds: [startEventMsg]
       };
@@ -74,6 +75,7 @@ export class StartEventCommandService {
   }
 
   private getStartEventMsg (
+    communityEventId: string,
     title: string,
     userTag: string,
     guildName: string,
@@ -86,6 +88,7 @@ export class StartEventCommandService {
       color: Colors.Green,
       description,
       fields: [
+        { name: 'ID', value: `${communityEventId}`, inline: true },
         { name: 'Status', value: 'Community event started', inline: true },
         { name: 'Organizer', value: `${userTag} `, inline: true },
         { name: 'Discord Server', value: `${guildName} `, inline: true },

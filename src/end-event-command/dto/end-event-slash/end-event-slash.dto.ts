@@ -1,5 +1,6 @@
-import { Channel, Param } from '@discord-nestjs/core';
-import { ChannelType } from 'discord.js';
+import { Channel, Param, ParamType } from '@discord-nestjs/core';
+import { IsOptional, IsString } from 'class-validator';
+import { Attachment, ChannelType } from 'discord.js';
 
 export class EndEventSlashDto {
   @Param({
@@ -9,4 +10,14 @@ export class EndEventSlashDto {
   })
   @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
   voiceChannelId: string;
+
+  @IsString()
+  @IsOptional()
+  @Param({
+    name: 'links_txt',
+    description: 'A list of poaps to be awarded to participants.',
+    required: false,
+    type: ParamType.ATTACHMENT,
+  })
+  poapLinks?: Attachment;
 }
