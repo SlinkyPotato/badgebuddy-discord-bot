@@ -1,9 +1,8 @@
-import { SlashException } from '@/exceptions/slash.exception';
 import { ArgumentsHost, Catch, ExceptionFilter } from '@nestjs/common';
 import { Colors } from 'discord.js';
 
-@Catch(SlashException)
-export class SlashExceptionFilter implements ExceptionFilter {
+@Catch(Error)
+export class SlashErrorExceptionFilter implements ExceptionFilter {
   
   async catch(
     error: Error,

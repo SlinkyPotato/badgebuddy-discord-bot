@@ -1,5 +1,5 @@
 import { GuildOnlyGuard as GuildOnlyGuard } from '@/guards/guild-only-execution.guard';
-import { SlashValidationFilter } from '@/filters/slash-validation.filter';
+import { SlashDtoValidationFilter } from '@/filters/slash-dto-validation.filter';
 import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { Injectable, Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
@@ -8,8 +8,10 @@ import { StartEventSlashDto } from './dto/start-event-slash.dto';
 import {
   CommunityEventsManageApiService
 } from '@/api/community-events-manage/community-events-manage-api.service';
-import { SlashExceptionFilter } from '@/filters/slash-exception.filter';
+import { SlashErrorExceptionFilter } from '@/filters/slash-error-exception.filter';
 import { SlashException } from '@/exceptions/slash.exception';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { SlashValidationExceptionFilter } from '@/filters/slash-validation-exception.filter';
 
 @Command({
   name: 'start-event',
@@ -23,7 +25,7 @@ export class StartEventCommandService {
   ) {}
 
   @Handler()
-  @UseFilters(SlashValidationFilter, SlashExceptionFilter)
+  @UseFilters(SlashDtoValidationFilter, SlashErrorExceptionFilter, SlashValidationExceptionFilter)
   @UseGuards(GuildOnlyGuard)
   async onStartCommand(
     @IA(SlashCommandPipe, ValidationPipe) startEventDto: StartEventSlashDto,
@@ -55,6 +57,7 @@ export class StartEventCommandService {
         voiceChannelName,
         Number(startEventDto.durationInMinutes),
         startEventDto.description,
+        response.availablePOAPs,
       );
 
       this.logger.log(`successfully started event: ${response.communityEventId}`);
@@ -64,8 +67,12 @@ export class StartEventCommandService {
     } catch (e) {
       this.logger.error(e);
       if (e.response?.status === 409) {
-        throw new SlashException(
+        throw new ValidationException(
           'An event is already in progress. Please end the current event before starting a new one.',
+        );
+      } else if (e.response?.status === 403) {
+        throw new ValidationException(
+          'You are not authorized. Are you a POAP manager?',
         );
       }
       throw new SlashException(
@@ -82,6 +89,7 @@ export class StartEventCommandService {
     voiceChannelName: string,
     durationInMinutes: number,
     description?: string,
+    availablePOAPs?: number,
   ): APIEmbed {
     return {
       title,
@@ -94,6 +102,7 @@ export class StartEventCommandService {
         { name: 'Discord Server', value: `${guildName} `, inline: true },
         { name: 'Voice Channel', value: `🎙️${voiceChannelName}`, inline: true },
         { name: 'Duration', value: `${durationInMinutes} minutes`, inline: true },
+        { name: 'Available POAPs', value: `${availablePOAPs}`, inline: true },
       ],
     };
   }

@@ -1,13 +1,15 @@
 import { CommunityEventsManageApiService } from '@/api/community-events-manage/community-events-manage-api.service';
 import { GuildOnlyGuard } from '@/guards/guild-only-execution.guard';
-import { SlashValidationFilter } from '@/filters/slash-validation.filter';
+import { SlashDtoValidationFilter } from '@/filters/slash-dto-validation.filter';
 import { SlashCommandPipe } from '@discord-nestjs/common';
 import { Command, Handler, IA } from '@discord-nestjs/core';
 import { Injectable, Logger, UseFilters, UseGuards, ValidationPipe } from '@nestjs/common';
 import { EndEventSlashDto } from './dto/end-event-slash/end-event-slash.dto';
 import { APIEmbed, ChatInputCommandInteraction, Colors } from 'discord.js';
-import { SlashExceptionFilter } from '@/filters/slash-exception.filter';
+import { SlashErrorExceptionFilter } from '@/filters/slash-error-exception.filter';
 import { SlashException } from '@/exceptions/slash.exception';
+import { ValidationException } from '@/exceptions/validation.exception';
+import { SlashValidationExceptionFilter } from '@/filters/slash-validation-exception.filter';
 
 @Command({
   name: 'end-event',
@@ -22,7 +24,7 @@ export class EndEventCommandService {
   ) {}
 
   @Handler()
-  @UseFilters(SlashValidationFilter, SlashExceptionFilter)
+  @UseFilters(SlashDtoValidationFilter, SlashErrorExceptionFilter, SlashValidationExceptionFilter)
   @UseGuards(GuildOnlyGuard)
   async onEndCommand(
     @IA(SlashCommandPipe, ValidationPipe) endEventDto: EndEventSlashDto,
@@ -48,6 +50,7 @@ export class EndEventCommandService {
         voiceChannelName,
         durationInMinutes,
         response.description,
+        response.availablePOAPs,
       );
 
       this.logger.log(`successfully ended event: ${response.communityEventId}`);
@@ -58,9 +61,13 @@ export class EndEventCommandService {
     } catch (e) {
       this.logger.error(e);
       if (e.response?.status === 404) {
-        throw new SlashException('Event not found.');
+        throw new ValidationException('Active event not found for voice channel.');
+      } else if (e.response?.status === 403) {
+        throw new ValidationException(
+          'You are not authorized. Are you a POAP manager?',
+        );
       }
-      throw new SlashException(e.message);
+      throw new SlashException('Failed to end event. Please contact support.');
     }
   }
 
@@ -72,6 +79,7 @@ export class EndEventCommandService {
     voiceChannelName: string,
     durationInMinutes: number,
     description?: string,
+    availablePOAPs?: number,
   ): APIEmbed {
     return {
       title,
@@ -84,6 +92,7 @@ export class EndEventCommandService {
         { name: 'Discord Server', value: `${guildName} `, inline: true },
         { name: 'Voice Channel', value: `🎙${voiceChannelName} `, inline: true },
         { name: 'Duration', value: `${durationInMinutes} minutes`, inline: true },
+        { name: 'Available POAPs', value: `${availablePOAPs}`, inline: true },
       ],
     };
   }

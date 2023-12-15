@@ -4,7 +4,7 @@ import { ValidationError } from 'class-validator';
 import { Colors, EmbedBuilder } from 'discord.js';
 
 @Catch(WrongArgsException)
-export class SlashValidationFilter implements ExceptionFilter {
+export class SlashDtoValidationFilter implements ExceptionFilter {
   
   async catch(
     exceptionList: WrongArgsException,
