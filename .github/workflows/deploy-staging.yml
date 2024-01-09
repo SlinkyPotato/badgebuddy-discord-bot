@@ -47,8 +47,8 @@ jobs:
           context: .
           push: true
           tags: |
-            solidchain/badge-buddy-bot:next
-            solidchain/badge-buddy-bot:${{ steps.package.outputs.PACKAGE_VERSION }}
+            ${{ secrets.DOCKER_USERNAME }}/badge-buddy-bot:next
+            ${{ secrets.DOCKER_USERNAME }}/badge-buddy-bot:${{ steps.package.outputs.PACKAGE_VERSION }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
