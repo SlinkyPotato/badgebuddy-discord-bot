@@ -1,6 +1,6 @@
 {
   "name": "badge-buddy-bot",
-  "version": "0.0.3-8",
+  "version": "0.0.3-9",
   "description": "Awarding badges to discord community events.",
   "author": "SlinkyPotato <patinobrian@gmail.com>",
   "private": true,
