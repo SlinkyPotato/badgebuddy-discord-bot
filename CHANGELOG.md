@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-7](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-6...v0.0.3-7) (2024-01-10)
+
+
+### Features
+
+* add community event Id in embed ([d0cd8c3](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/d0cd8c300a93bb0794800ed4ddd959476b6d1b90))
+* add description param ([8bf5f4e](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/8bf5f4efccdd99514147506c8939f03a356ae299))
+* add message style to start event ([21f86eb](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/21f86eb0c0e2082350ec2e6df3c098d6f6c05f2a))
+* display available POAPs ([2a793da](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/2a793da6efb8ea1f04cacf57e133afbdd8454251))
+
+
+### Bug Fixes
+
+* properly set swc configuration ([6277f30](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/6277f30c95cd8abdf597c158e6921ef9c8ac2701))
+
+
+### Refactor
+
+* integrate prettier, enhance stage/prod pipeline ([a5bcbf9](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/a5bcbf944528aef4dac259b74de6c6da3606145f))
+* remove api specific dtos in favor of commond dtos ([cbe0eb6](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/cbe0eb6b957884ba29549063fc6ae542c5e1f065))
+* remove class-validation setting of durationInMinutes ([f2c108e](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/f2c108ed5cd82b220db0f6b2e1209156c569d48e))
+* update deps and integrate new common ([0c92864](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/0c92864a9e8adf2e52c879f6415ea8940eea0783))
+* use vars for github actions ([2fa18bb](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/2fa18bb7bfc2334a9b4c0ae91efd669bd783e711))
+
 ### [0.0.3-6](https://github.com/SlinkyPotato/badge-buddy-bot/compare/v0.0.3-5...v0.0.3-6) (2023-11-04)
 
 
