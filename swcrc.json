@@ -2,12 +2,20 @@
   "$schema": "https://json.schemastore.org/swcrc",
   "sourceMaps": true,
   "jsc": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
     "parser": {
       "syntax": "typescript",
       "decorators": true,
       "dynamicImport": true
     },
-    "baseUrl": "./"
+    "transform": {
+      "useDefineForClassFields": true,
+      "legacyDecorator": true,
+      "decoratorMetadata": true
+    }
   },
   "minify": false
 }

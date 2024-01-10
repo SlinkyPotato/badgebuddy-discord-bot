@@ -1,19 +1,29 @@
 import { Module } from '@nestjs/common';
-import { CommandsModule } from './commands/commands.module';
-import { ApiModule } from './api/api.module';
-import {
-  CommonConfigModule,
-  DiscordConfigModule,
-  RedisConfigModule,
-} from '@badgebuddy/common';
+import { CommonConfigModule, DiscordConfigModule } from '@badgebuddy/common';
+import { StartEventCommandModule } from './start-event-command/start-event-command.module';
+import { EndEventCommandModule } from './end-event-command/end-event-command.module';
+import { ClaimPoapCommandModule } from './claim-poap-command/claim-poap-command.module';
+import { DistributePoapCommandModule } from './distribute-poap-command/distribute-poap-command.module';
+import { HelpCommandModule } from './help-command/help-command.module';
+import { AuthModule } from './api/auth/auth.module';
+import Joi from 'joi';
 
 @Module({
   imports: [
-    CommonConfigModule.forRoot(),
-    RedisConfigModule.forRootAsync(),
+    CommonConfigModule.forRoot({
+      validationSchema: {
+        REDIS_HOST: Joi.string().optional(),
+        REDIS_PORT: Joi.number().optional(),
+        REDIS_CACHE_MIN: Joi.number().required(),
+      },
+    }),
     DiscordConfigModule.forRootAsync(),
-    CommandsModule,
-    ApiModule,
+    StartEventCommandModule,
+    EndEventCommandModule,
+    ClaimPoapCommandModule,
+    DistributePoapCommandModule,
+    HelpCommandModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
