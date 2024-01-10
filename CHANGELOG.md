@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-9](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-8...v0.0.3-9) (2024-01-10)
+
+
+### Bug Fixes
+
+* remove redis port ([10bdae3](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/10bdae3ef7665c0e5f1301a82aa58839ce51b582))
+
 ### [0.0.3-8](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-7...v0.0.3-8) (2024-01-10)
 
 
