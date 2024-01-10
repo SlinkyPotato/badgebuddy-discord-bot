@@ -12,7 +12,7 @@ export class GuildOnlyGuard implements CanActivate {
   canActivate(
     context: ExecutionContext,
   ): boolean | Promise<boolean> | Observable<boolean> {
-    const interaction: CommandInteraction = context.getArgByIndex(0);
+    const interaction = context.getArgByIndex<CommandInteraction>(0);
     if (interaction.guildId == null || interaction.guildId == '') {
       throw new SlashException('Please run command from a discord server.');
     }

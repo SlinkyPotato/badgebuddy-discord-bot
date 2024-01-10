@@ -46,6 +46,8 @@ export class StartEventCommandService {
     @IA(SlashCommandPipe, ValidationPipe) startEventDto: StartEventSlashDto,
     @IA() interaction: ChatInputCommandInteraction,
   ): Promise<InteractionReplyOptions> {
+    startEventDto.durationInMinutes ??= '30';
+
     this.logger.log(
       `attempting to start event for guild: ${interaction.guildId} and organizer: ${interaction.member?.user.id}`,
     );
