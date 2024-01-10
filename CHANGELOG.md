@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-8](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-7...v0.0.3-8) (2024-01-10)
+
+
+### Refactor
+
+* update env vault ([d9c4aec](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/d9c4aec4f5520db286adf07c94fae7f76abcc0fa))
+
 ### [0.0.3-7](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-6...v0.0.3-7) (2024-01-10)
 
 
