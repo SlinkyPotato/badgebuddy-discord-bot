@@ -34,7 +34,8 @@
     "env:pull": "dotenv-vault pull",
     "env:push": "dotenv-vault push",
     "env:keys": "dotenv-vault keys",
-    "sync": "git fetch && git pull && dotenv-vault pull && pnpm install"
+    "sync": "git fetch && git pull && pnpm install",
+    "sync:env": "git fetch && git pull && pnpm install && dotenv-vault pull"
   },
   "dependencies": {
     "@badgebuddy/common": "2.2.0",
