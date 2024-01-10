@@ -1,7 +1,7 @@
-ARG NODE_VERSION
+ARG DOTENV_KEY
 
-FROM node:${NODE_VERSION}-alpine AS base
-LABEL description="Node processor for badge-buddy-bot"
+FROM node:20.10.0-alpine AS base
+LABEL description="Discord bot for badgebuddy"
 
 RUN corepack enable
 

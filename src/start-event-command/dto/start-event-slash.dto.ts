@@ -38,7 +38,7 @@ export class StartEventSlashDto {
     description: 'Number of minutes event will remain active.',
     required: false,
   })
-  durationInMinutes: string = '30';
+  durationInMinutes = '30';
 
   @IsString()
   @IsOptional()

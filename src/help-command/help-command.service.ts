@@ -13,7 +13,7 @@ export class HelpCommandService {
     'https://discord.gg/TPEr4hy32x';
 
   @Handler()
-  async onPoapSubCommand() {
+  onPoapSubCommand() {
     return {
       embeds: [
         {

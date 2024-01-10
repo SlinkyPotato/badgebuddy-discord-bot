@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { HelpCommandService } from './help-command.service';
+import { describe, it, expect, beforeEach } from '@jest/globals';
 
 describe('HelpCommandService', () => {
   let service: HelpCommandService;

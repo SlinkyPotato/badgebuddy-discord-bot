@@ -1,10 +1,7 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {
-  CommonPinoLogger,
-  CommonPinoLoggerService,
-} from '@badgebuddy/common';
+import { CommonPinoLogger, CommonPinoLoggerService } from '@badgebuddy/common';
 
 async function bootstrap() {
   const pinoLogger = new CommonPinoLogger('discord-bot');
@@ -13,4 +10,7 @@ async function bootstrap() {
     logger: pinoLoggerService,
   });
 }
-bootstrap();
+bootstrap().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});
