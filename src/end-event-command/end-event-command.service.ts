@@ -74,7 +74,6 @@ export class EndEventCommandService {
         voiceChannelName,
         durationInMinutes,
         response.description,
-        response.availablePOAPs,
       );
 
       this.logger.log(`successfully ended event: ${response.communityEventId}`);
