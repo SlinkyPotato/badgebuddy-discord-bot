@@ -5,8 +5,8 @@ import { EndEventCommandModule } from './end-event-command/end-event-command.mod
 import { ClaimPoapCommandModule } from './claim-poap-command/claim-poap-command.module';
 import { DistributePoapCommandModule } from './distribute-poap-command/distribute-poap-command.module';
 import { HelpCommandModule } from './help-command/help-command.module';
-import { AuthModule } from './api/auth/auth.module';
 import Joi from 'joi';
+import { ApiBadgebuddyModule } from '@/api-badgebuddy/api-badgebuddy.module';
 
 @Module({
   imports: [
@@ -23,7 +23,7 @@ import Joi from 'joi';
     ClaimPoapCommandModule,
     DistributePoapCommandModule,
     HelpCommandModule,
-    AuthModule,
+    ApiBadgebuddyModule,
   ],
 })
 export class AppModule {}

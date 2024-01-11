@@ -8,9 +8,9 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthRequestInterceptor } from '../auth/auth-request.interceptor';
+import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
 import { firstValueFrom } from 'rxjs';
-import { AuthResponseInterceptor } from '../auth/auth-response.interceptor';
+import { AuthResponseInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-response/auth-response.interceptor';
 import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 
 @Injectable()

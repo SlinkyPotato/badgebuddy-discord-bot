@@ -4,7 +4,7 @@ import { DiscordBotTokenDto } from '@badgebuddy/common';
 import crypto from 'crypto';
 
 @Injectable()
-export class AuthService {
+export class AuthApiService {
 
   constructor(
     private readonly jwtService: JwtService,

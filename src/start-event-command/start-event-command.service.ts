@@ -18,7 +18,7 @@ import {
   InteractionReplyOptions,
 } from 'discord.js';
 import { StartEventSlashDto } from './dto/start-event-slash.dto';
-import { CommunityEventsManageApiService } from '@/api/community-events-manage/community-events-manage-api.service';
+import { CommunityEventsManageApiService } from '@/api-badgebuddy/community-events-manage-api/community-events-manage-api.service';
 import { SlashErrorExceptionFilter } from '@/filters/slash-error-exception.filter';
 import { SlashException } from '@/exceptions/slash.exception';
 import { ValidationException } from '@/exceptions/validation.exception';

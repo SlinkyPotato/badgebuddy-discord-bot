@@ -1,4 +1,4 @@
-import { CommunityEventsManageApiService } from '@/api/community-events-manage/community-events-manage-api.service';
+import { CommunityEventsManageApiService } from '@/api-badgebuddy/community-events-manage-api/community-events-manage-api.service';
 import { GuildOnlyGuard } from '@/guards/guild-only-execution.guard';
 import { SlashDtoValidationFilter } from '@/filters/slash-dto-validation.filter';
 import { SlashCommandPipe } from '@discord-nestjs/common';

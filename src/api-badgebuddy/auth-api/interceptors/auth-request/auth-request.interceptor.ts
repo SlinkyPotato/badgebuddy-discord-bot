@@ -1,7 +1,7 @@
 import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthService } from './auth.service';
+import { AuthApiService } from '../../auth-api.service';
 import { InternalAxiosRequestConfig } from 'axios';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class AuthRequestInterceptor {
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService,
-    private authService: AuthService,
+    private authService: AuthApiService,
   ) {}
 
   intercept(

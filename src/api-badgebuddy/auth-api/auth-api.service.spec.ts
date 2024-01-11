@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './auth.service';
+import { AuthApiService } from './auth-api.service';
 import { JwtService } from '@nestjs/jwt';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 
 describe('AuthService', () => {
-  let service: AuthService;
+  let service: AuthApiService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, { provide: JwtService, useValue: jest.fn() }],
+      providers: [AuthApiService, { provide: JwtService, useValue: jest.fn() }],
     }).compile();
 
-    service = module.get<AuthService>(AuthService);
+    service = module.get<AuthApiService>(AuthApiService);
   });
 
   it('should be defined', () => {

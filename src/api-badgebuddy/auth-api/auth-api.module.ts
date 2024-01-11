@@ -1,9 +1,9 @@
 import { Logger, Module } from '@nestjs/common';
-import { AuthService } from './auth.service';
+import { AuthApiService } from './auth-api.service';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthRequestInterceptor } from './auth-request.interceptor';
+import { AuthRequestInterceptor } from './interceptors/auth-request/auth-request.interceptor';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AuthResponseInterceptor } from './auth-response.interceptor';
+import { AuthResponseInterceptor } from './interceptors/auth-response/auth-response.interceptor';
 import {
   ENV_AUTH_DISCORD_BOT_CLIENT_ID,
   ENV_AUTH_DISCORD_BOT_CLIENT_SECRET,
@@ -27,10 +27,10 @@ import {
   ],
   providers: [
     Logger,
-    AuthService,
+    AuthApiService,
     AuthRequestInterceptor,
     AuthResponseInterceptor,
   ],
-  exports: [AuthService, AuthRequestInterceptor, AuthResponseInterceptor],
+  exports: [AuthApiService, AuthRequestInterceptor, AuthResponseInterceptor],
 })
-export class AuthModule {}
+export class AuthApiModule {}

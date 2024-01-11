@@ -3,8 +3,8 @@ import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { AuthRequestInterceptor } from '@/api/auth/auth-request.interceptor';
-import { AuthResponseInterceptor } from '@/api/auth/auth-response.interceptor';
+import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
+import { AuthResponseInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-response/auth-response.interceptor';
 import {
   describe,
   it,
