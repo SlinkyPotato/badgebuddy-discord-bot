@@ -3,8 +3,6 @@ import { Test } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
-import { AuthResponseInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-response/auth-response.interceptor';
 import {
   describe,
   it,
@@ -13,6 +11,7 @@ import {
   beforeEach,
   afterEach,
 } from '@jest/globals';
+import { AuthApiService } from '@/api-badgebuddy/auth-api/auth-api.service';
 
 describe('CommunityEventsManageApiService', () => {
   let service: CommunityEventsManageApiService;
@@ -34,8 +33,7 @@ describe('CommunityEventsManageApiService', () => {
         { provide: ConfigService, useValue: mockConfigService },
         { provide: Logger, useValue: mockLogger },
         { provide: HttpService, useValue: jest.fn() },
-        { provide: AuthRequestInterceptor, useValue: jest.fn() },
-        { provide: AuthResponseInterceptor, useValue: jest.fn() },
+        { provide: AuthApiService, useValue: jest.fn() },
       ],
     }).compile();
 
