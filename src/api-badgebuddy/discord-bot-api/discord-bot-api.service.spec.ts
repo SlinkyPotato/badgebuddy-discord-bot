@@ -10,6 +10,7 @@ import { DiscordBotApiService } from './discord-bot-api.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 import { Logger } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 
 jest.mock('axios');
 
@@ -31,6 +32,7 @@ describe('GuildsApiService', () => {
         DiscordBotApiService,
         { provide: ConfigService, useValue: mockConfigService },
         { provide: Logger, useValue: mockLogger },
+        { provide: HttpService, useValue: jest.fn() },
       ],
     }).compile();
 

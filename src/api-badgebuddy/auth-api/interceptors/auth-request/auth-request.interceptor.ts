@@ -1,15 +1,17 @@
-import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
+import { ENV_BADGEBUDDY_API_HOST } from '@/app.constants';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthApiService } from '../../auth-api.service';
 import { InternalAxiosRequestConfig } from 'axios';
+import crypto from 'crypto';
+import { JwtService } from '@nestjs/jwt';
+import { DiscordBotTokenDto } from '@badgebuddy/common';
 
 @Injectable()
 export class AuthRequestInterceptor {
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService,
-    private authService: AuthApiService,
+    private readonly jwtService: JwtService,
   ) {}
 
   intercept(
@@ -18,7 +20,7 @@ export class AuthRequestInterceptor {
     }>,
   ) {
     const url = config.url;
-    const bbBaseUrl = this.configService.get<string>(ENV_BADGE_BUDDY_API_HOST);
+    const bbBaseUrl = this.configService.get<string>(ENV_BADGEBUDDY_API_HOST);
 
     if (!url || !url.startsWith(`${bbBaseUrl}`)) {
       this.logger.verbose('skip intercepting request');
@@ -30,10 +32,17 @@ export class AuthRequestInterceptor {
     }
 
     const discordUserSId = config?.data!.organizerSId;
-    const authToken = this.authService.generateToken(discordUserSId);
+    const authToken = this.generateToken(discordUserSId);
 
     config.headers.Authorization = `Bearer ${authToken}`;
     this.logger.verbose(`intercepted request: ${url}`);
     return config;
+  }
+
+  generateToken(discordUserSId: string) {
+    return this.jwtService.sign({
+      sessionId: crypto.randomUUID().toString(),
+      discordUserSId,
+    } as DiscordBotTokenDto);
   }
 }

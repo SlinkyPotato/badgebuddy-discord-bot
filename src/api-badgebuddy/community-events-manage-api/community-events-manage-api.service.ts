@@ -1,4 +1,4 @@
-import { ENV_BADGE_BUDDY_API_HOST } from '@/app.constants';
+import { ENV_BADGEBUDDY_API_HOST } from '@/app.constants';
 import {
   CommunityEventsManageDiscordDeleteRequestDto,
   CommunityEventsManageDiscordDeleteResponseDto,
@@ -49,7 +49,7 @@ export class CommunityEventsManageApiService implements OnModuleInit {
     this.logger.verbose(
       `attempting to call post events endpoint, guildSId: ${request.guildSId}, organizerSId: ${request.organizerSId}`,
     );
-    const postEventsUrl = `${this.configService.get(ENV_BADGE_BUDDY_API_HOST)}${
+    const postEventsUrl = `${this.configService.get(ENV_BADGEBUDDY_API_HOST)}${
       CommunityEventsManageApiService.BASE_PATH
     }`;
     try {
@@ -82,7 +82,7 @@ export class CommunityEventsManageApiService implements OnModuleInit {
     request: CommunityEventsManageDiscordDeleteRequestDto,
   ): Promise<CommunityEventsManageDiscordDeleteResponseDto> {
     this.logger.log('attempting to call put events endpoint');
-    const url = `${this.configService.get(ENV_BADGE_BUDDY_API_HOST)}${
+    const url = `${this.configService.get(ENV_BADGEBUDDY_API_HOST)}${
       CommunityEventsManageApiService.BASE_PATH
     }`;
     try {

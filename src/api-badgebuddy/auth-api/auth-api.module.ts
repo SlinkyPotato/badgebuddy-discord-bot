@@ -5,8 +5,8 @@ import { AuthRequestInterceptor } from './interceptors/auth-request/auth-request
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthResponseInterceptor } from './interceptors/auth-response/auth-response.interceptor';
 import {
-  ENV_AUTH_DISCORD_BOT_CLIENT_ID,
-  ENV_AUTH_DISCORD_BOT_CLIENT_SECRET,
+  ENV_BADGEBUDDY_API_CLIENT_ID,
+  ENV_BADGEBUDDY_API_CLIENT_SECRET,
 } from '@/app.constants';
 
 @Module({
@@ -16,11 +16,11 @@ import {
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>(ENV_AUTH_DISCORD_BOT_CLIENT_SECRET),
+        secret: configService.get<string>(ENV_BADGEBUDDY_API_CLIENT_SECRET),
         signOptions: {
           expiresIn: '4s',
-          issuer: configService.get<string>(ENV_AUTH_DISCORD_BOT_CLIENT_ID),
-          subject: configService.get<string>(ENV_AUTH_DISCORD_BOT_CLIENT_ID),
+          issuer: configService.get<string>(ENV_BADGEBUDDY_API_CLIENT_ID),
+          subject: configService.get<string>(ENV_BADGEBUDDY_API_CLIENT_ID),
         },
       }),
     }),
@@ -31,6 +31,6 @@ import {
     AuthRequestInterceptor,
     AuthResponseInterceptor,
   ],
-  exports: [AuthApiService, AuthRequestInterceptor, AuthResponseInterceptor],
+  exports: [AuthApiService],
 })
 export class AuthApiModule {}
