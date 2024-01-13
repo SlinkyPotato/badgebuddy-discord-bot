@@ -8,10 +8,8 @@ import {
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
 import { firstValueFrom } from 'rxjs';
-import { AuthResponseInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-response/auth-response.interceptor';
-import { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { AuthApiService } from '@/api-badgebuddy/auth-api/auth-api.service';
 
 @Injectable()
 export class CommunityEventsManageApiService implements OnModuleInit {
@@ -21,25 +19,12 @@ export class CommunityEventsManageApiService implements OnModuleInit {
     private configService: ConfigService,
     private logger: Logger,
     private readonly httpService: HttpService,
-    private readonly authRequestInterceptor: AuthRequestInterceptor,
-    private readonly authResponseInterceptor: AuthResponseInterceptor,
+    private readonly authApiService: AuthApiService,
   ) {}
 
   onModuleInit() {
     this.httpService.axiosRef.interceptors.request.use(
-      (config: InternalAxiosRequestConfig<{ organizerSId: string }>) => {
-        return this.authRequestInterceptor.intercept(config);
-      },
-    );
-    this.httpService.axiosRef.interceptors.response.use(
-      (response) => response,
-      (
-        errorResponse: AxiosResponse & {
-          response: { data: { message: string } };
-        },
-      ) => {
-        return this.authResponseInterceptor.intercept(errorResponse);
-      },
+      this.authApiService.commonAuthRequestInterceptor().interceptor,
     );
   }
 
