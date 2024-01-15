@@ -6,12 +6,14 @@ import {
 import {
   DiscordBotApiModule
 } from '@/api-badgebuddy/discord-bot-api/discord-bot-api.module';
+import { PoapsApiModule } from './poaps-api/poaps-api.module';
 
 @Module({
   imports: [
     AuthApiModule,
     CommunityEventsManageApiModule,
     DiscordBotApiModule,
+    PoapsApiModule,
   ]
 })
 export class ApiBadgebuddyModule {}

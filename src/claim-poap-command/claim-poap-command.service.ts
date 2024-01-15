@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Command } from '@discord-nestjs/core';
 
 @Command({
@@ -6,4 +6,6 @@ import { Command } from '@discord-nestjs/core';
   description: 'Claim a POAP.',
 })
 @Injectable()
-export class ClaimPoapCommandService {}
+export class ClaimPoapCommandService {
+  constructor(private readonly logger: Logger) {}
+}
