@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ClaimPoapCommandService } from './claim-poap-command.service';
+import { describe, beforeEach, it, expect } from '@jest/globals';
 
 describe('ClaimPoapCommandService', () => {
   let service: ClaimPoapCommandService;
