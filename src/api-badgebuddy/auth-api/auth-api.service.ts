@@ -1,19 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InternalAxiosRequestConfig } from 'axios';
-import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
+import { OrganizerSIdRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/organizer-sid-request/organizer-sid-request.interceptor';
 
 @Injectable()
 export class AuthApiService {
   constructor(
-    private readonly authRequestInterceptor: AuthRequestInterceptor,
+    private readonly organizerSIdRequestInterceptor: OrganizerSIdRequestInterceptor,
   ) {}
 
-  commonAuthRequestInterceptor() {
+  organizerRequestInterceptor() {
     return {
       interceptor: (
         config: InternalAxiosRequestConfig<{ organizerSId: string }>,
       ) => {
-        return this.authRequestInterceptor.intercept(config);
+        return this.organizerSIdRequestInterceptor.intercept(config);
       },
     };
   }

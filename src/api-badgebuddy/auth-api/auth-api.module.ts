@@ -1,13 +1,13 @@
 import { Logger, Module } from '@nestjs/common';
 import { AuthApiService } from './auth-api.service';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthRequestInterceptor } from './interceptors/auth-request/auth-request.interceptor';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthResponseInterceptor } from './interceptors/auth-response/auth-response.interceptor';
 import {
   ENV_BADGEBUDDY_API_CLIENT_ID,
   ENV_BADGEBUDDY_API_CLIENT_SECRET,
 } from '@/app.constants';
+import { OrganizerSIdRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/organizer-sid-request/organizer-sid-request.interceptor';
 
 @Module({
   imports: [
@@ -28,7 +28,7 @@ import {
   providers: [
     Logger,
     AuthApiService,
-    AuthRequestInterceptor,
+    OrganizerSIdRequestInterceptor,
     AuthResponseInterceptor,
   ],
   exports: [AuthApiService],

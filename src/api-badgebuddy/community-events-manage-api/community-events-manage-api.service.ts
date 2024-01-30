@@ -25,7 +25,7 @@ export class CommunityEventsManageApiService implements OnModuleInit {
 
   onModuleInit() {
     this.httpService.axiosRef.interceptors.request.use(
-      this.authApiService.commonAuthRequestInterceptor().interceptor,
+      this.authApiService.organizerRequestInterceptor().interceptor,
     );
   }
 

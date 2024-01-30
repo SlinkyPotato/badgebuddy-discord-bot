@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AuthApiService } from './auth-api.service';
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
-import { AuthRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/auth-request/auth-request.interceptor';
+import { OrganizerSIdRequestInterceptor } from '@/api-badgebuddy/auth-api/interceptors/organizer-sid-request/organizer-sid-request.interceptor';
 
 describe('AuthService', () => {
   let service: AuthApiService;
@@ -10,7 +10,7 @@ describe('AuthService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthApiService,
-        { provide: AuthRequestInterceptor, useValue: jest.fn() },
+        { provide: OrganizerSIdRequestInterceptor, useValue: jest.fn() },
       ],
     }).compile();
 

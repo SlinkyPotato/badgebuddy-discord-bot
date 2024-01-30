@@ -7,7 +7,7 @@ import { JwtService } from '@nestjs/jwt';
 import { DiscordBotTokenDto } from '@badgebuddy/common';
 
 @Injectable()
-export class AuthRequestInterceptor {
+export class OrganizerSIdRequestInterceptor {
   constructor(
     private readonly logger: Logger,
     private readonly configService: ConfigService,
