@@ -52,7 +52,7 @@ export class StartEventSlashDto {
   @IsString()
   @IsOptional()
   @Param({
-    name: 'links_txt',
+    name: 'links',
     description: 'A list of poaps to be awarded to participants.',
     required: false,
     type: ParamType.ATTACHMENT,
