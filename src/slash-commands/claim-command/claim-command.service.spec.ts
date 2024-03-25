@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ClaimPoapCommandService } from './claim-poap-command.service';
+import { ClaimCommandService } from './claim-command.service';
 import { describe, beforeEach, it, expect, jest } from '@jest/globals';
 import { Logger } from '@nestjs/common';
 
-describe('ClaimPoapCommandService', () => {
-  let service: ClaimPoapCommandService;
+describe('ClaimCommandService', () => {
+  let service: ClaimCommandService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ClaimPoapCommandService,
+        ClaimCommandService,
         {
           provide: Logger,
           useValue: jest.fn(),
@@ -17,7 +17,7 @@ describe('ClaimPoapCommandService', () => {
       ],
     }).compile();
 
-    service = module.get<ClaimPoapCommandService>(ClaimPoapCommandService);
+    service = module.get<ClaimCommandService>(ClaimCommandService);
   });
 
   it('should be defined', () => {

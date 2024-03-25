@@ -6,7 +6,7 @@ import { Command, Handler } from '@discord-nestjs/core';
   description: 'Claim a POAP.',
 })
 @Injectable()
-export class ClaimPoapCommandService {
+export class ClaimCommandService {
   constructor(private readonly logger: Logger) {}
 
   @Handler()
