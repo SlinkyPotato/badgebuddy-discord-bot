@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Command } from '@discord-nestjs/core';
+import { Command, Handler } from '@discord-nestjs/core';
 
 @Command({
   name: 'claim',
@@ -8,4 +8,9 @@ import { Command } from '@discord-nestjs/core';
 @Injectable()
 export class ClaimPoapCommandService {
   constructor(private readonly logger: Logger) {}
+
+  @Handler()
+  onClaimCommand(): void {
+    this.logger.log('Claim command received.');
+  }
 }
