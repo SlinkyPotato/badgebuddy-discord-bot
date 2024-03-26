@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { describe, beforeEach, it, expect, jest } from '@jest/globals';
 import { Logger } from '@nestjs/common';
 import { DistributeCommandService } from '@/slash-commands/distribute-command/distribute-command.service';
+import { ReflectMetadataProvider } from '@discord-nestjs/core';
 
 describe('DistributeCommandService', () => {
   let service: DistributeCommandService;
@@ -12,6 +13,10 @@ describe('DistributeCommandService', () => {
         DistributeCommandService,
         {
           provide: Logger,
+          useValue: jest.fn(),
+        },
+        {
+          provide: ReflectMetadataProvider,
           useValue: jest.fn(),
         },
       ],
