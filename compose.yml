@@ -1,7 +1,7 @@
 name: local_badgebuddy
 services:
   discord-bot-1:
-    container_name: discord-bot-1_local-badgebuddy
+    container_name: local_badgebuddy-discord-bot-1
     depends_on:
       - redis
     build:
