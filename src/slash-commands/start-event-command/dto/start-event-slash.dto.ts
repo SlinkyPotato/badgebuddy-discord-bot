@@ -1,10 +1,4 @@
-import {
-  IsNumberString,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 import { Channel, Param, ParamType } from '@discord-nestjs/core';
 import { Attachment, ChannelType } from 'discord.js';
 
@@ -25,20 +19,22 @@ export class StartEventSlashDto {
     name: 'channel',
     description: 'The voice channel or stage for event tracking.',
     required: true,
+    type: ParamType.STRING,
   })
   @Channel([ChannelType.GuildVoice, ChannelType.GuildStageVoice])
   voiceChannelId: string;
 
   @Min(10)
   @Max(720)
-  @IsNumberString()
+  @IsNumber()
   @IsOptional()
   @Param({
     name: 'duration',
     description: 'Number of minutes event will remain active.',
     required: false,
+    type: ParamType.INTEGER,
   })
-  durationInMinutes?: string;
+  durationInMinutes?: number;
 
   @IsString()
   @IsOptional()
@@ -49,7 +45,6 @@ export class StartEventSlashDto {
   })
   description?: string;
 
-  @IsString()
   @IsOptional()
   @Param({
     name: 'links',

@@ -4,6 +4,7 @@ import { EndEventCommandModule } from '@/slash-commands/end-event-command/end-ev
 import { ClaimCommandModule } from '@/slash-commands/claim-command/claim-command.module';
 import { HelpCommandModule } from '@/slash-commands/help-command/help-command.module';
 import { DistributeCommandModule } from '@/slash-commands/distribute-command/distribute-command.module';
+import { MintCommandModule } from '@/slash-commands/mint-command/mint-command.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { DistributeCommandModule } from '@/slash-commands/distribute-command/dis
     EndEventCommandModule,
     ClaimCommandModule,
     DistributeCommandModule,
+    MintCommandModule,
     HelpCommandModule,
   ],
 })

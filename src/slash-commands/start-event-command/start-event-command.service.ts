@@ -46,7 +46,7 @@ export class StartEventCommandService {
     @IA(SlashCommandPipe, ValidationPipe) startEventDto: StartEventSlashDto,
     @IA() interaction: ChatInputCommandInteraction,
   ): Promise<InteractionReplyOptions> {
-    startEventDto.durationInMinutes ??= '30';
+    startEventDto.durationInMinutes ??= 30;
 
     this.logger.log(
       `attempting to start event for guild: ${interaction.guildId} and organizer: ${interaction.member?.user.id}`,
@@ -60,8 +60,7 @@ export class StartEventCommandService {
         organizerSId: (interaction.member as GuildMember).id.toString(),
         voiceChannelSId: startEventDto.voiceChannelId,
         endDate: new Date(
-          new Date().getTime() +
-            Number(startEventDto.durationInMinutes) * 60_000,
+          new Date().getTime() + startEventDto.durationInMinutes * 60_000,
         ).toISOString(),
         description: startEventDto.description,
         poapLinksUrl: startEventDto.poapLinks?.url,

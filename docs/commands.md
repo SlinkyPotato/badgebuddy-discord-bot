@@ -41,13 +41,13 @@ a new line seperated list of claimable POAP urls that is stored for the event.
 
 ### Distribute
 ```
-/distribute [community-event-id] (links)
+/distribute [community-event-id] [links]
 ```
 Distribute POAPs to all users that attended the event. The bot will assign a unique 
 POAP claim link to each user that attended the event. Attendees can then claim 
 their POAP by /claim or visiting the web app.
 - `community-event-id` - The id of the event that you want to distribute POAPs for.
-- `links` - (Optional) A new line seperated file containing a list of claimable
+- `links` - A new line seperated file containing a list of claimable
   POAP urls. This is given by the POAP foundation. Appends to an existing list.
 
 ### Mint POAP
