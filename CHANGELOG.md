@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3-10](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-9...v0.0.3-10) (2024-03-26)
+
+
+### Docs
+
+* add commands md file ([797747f](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/797747f0d1d204407814fe459d3770a50089495f))
+* update /help ([fe92bc6](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/fe92bc6566e29bde172cbfc30fdb2a33f5795560))
+
+
+### Refactor
+
+* community-events-manage-api service ([e5838c7](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/e5838c73c128a612412332d94608253a5ed95b33))
+* create slash-commands directory ([21a0ae4](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/21a0ae42091b0f38d72426acbfb97764a6c21359))
+* enhance pnpm sync comamnd ([1ba1f19](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/1ba1f195806337c4250411e37c753e0e89daffc0))
+* getDiscordBotSettings ([fc5b88f](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/fc5b88fb6eaaa51be9a56672720a4e6a9036a3c8))
+* rename api to api-badgebuddy ([2d091d5](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/2d091d51336cfa1950e19c4a7dbfd798586d7a06))
+* start-event dto and add dtos to new slash commands ([f86fe4d](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/f86fe4d4ebf9fdfb064df3a0b8e7b6b699c9401e))
+* upgrade common and integrate husky ([900daeb](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/900daeb27ffcd4315485aaa7e0957c0a98355618))
+
+
+### Tests
+
+* add mock deps to claim and distribute ([eb893f2](https://github.com/SlinkyPotato/badge-buddy-discord-bot/commit/eb893f2bb88d1f142c8fa255d744606e062f7809))
+
 ### [0.0.3-9](https://github.com/SlinkyPotato/badge-buddy-discord-bot/compare/v0.0.3-8...v0.0.3-9) (2024-01-10)
 
 
