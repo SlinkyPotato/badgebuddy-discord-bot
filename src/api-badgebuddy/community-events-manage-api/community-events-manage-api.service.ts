@@ -1,9 +1,9 @@
 import { ENV_BADGEBUDDY_API_HOST } from '@/app.constants';
 import {
-  CommunityEventsManageDiscordDeleteRequestDto,
-  CommunityEventsManageDiscordDeleteResponseDto,
-  CommunityEventsManageDiscordPostRequestDto,
-  CommunityEventsManageDiscordPostResponseDto,
+  CommunityEventsManageDiscordEndEventRequestDto,
+  CommunityEventsManageDiscordEndEventResponseDto,
+  CommunityEventsManageDiscordStartEventRequestDto,
+  CommunityEventsManageDiscordStartEventResponseDto,
 } from '@badgebuddy/common';
 import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
@@ -14,7 +14,7 @@ import { AxiosResponse } from 'axios';
 
 @Injectable()
 export class CommunityEventsManageApiService implements OnModuleInit {
-  static readonly BASE_PATH = '/discord/community-events/manage' as const;
+  static readonly BASE_PATH = '/community-events/manage/discord' as const;
 
   constructor(
     private configService: ConfigService,
@@ -34,18 +34,18 @@ export class CommunityEventsManageApiService implements OnModuleInit {
    * @param request
    */
   async startEvent(
-    request: CommunityEventsManageDiscordPostRequestDto,
-  ): Promise<CommunityEventsManageDiscordPostResponseDto> {
+    request: CommunityEventsManageDiscordStartEventRequestDto,
+  ): Promise<CommunityEventsManageDiscordStartEventResponseDto> {
     this.logger.verbose(
       `attempting to call post events endpoint, guildSId: ${request.guildSId}, organizerSId: ${request.organizerSId}`,
     );
     const postEventsUrl = `${this.configService.get(ENV_BADGEBUDDY_API_HOST)}${
       CommunityEventsManageApiService.BASE_PATH
     }`;
-    let response: AxiosResponse<CommunityEventsManageDiscordPostResponseDto>;
+    let response: AxiosResponse<CommunityEventsManageDiscordStartEventResponseDto>;
     try {
       response = await firstValueFrom(
-        this.httpService.post<CommunityEventsManageDiscordPostResponseDto>(
+        this.httpService.post<CommunityEventsManageDiscordStartEventResponseDto>(
           postEventsUrl,
           request,
         ),
@@ -70,31 +70,26 @@ export class CommunityEventsManageApiService implements OnModuleInit {
 
   /**
    * End a community event
-   * @param organizerSId
    * @param request
    */
   async endEvent(
-    organizerSId: string,
-    request: CommunityEventsManageDiscordDeleteRequestDto,
-  ): Promise<CommunityEventsManageDiscordDeleteResponseDto> {
+    request: CommunityEventsManageDiscordEndEventRequestDto,
+  ): Promise<CommunityEventsManageDiscordEndEventResponseDto> {
     this.logger.log('attempting to call put events endpoint');
     const url = `${this.configService.get(ENV_BADGEBUDDY_API_HOST)}${
       CommunityEventsManageApiService.BASE_PATH
     }`;
-    let response: AxiosResponse<CommunityEventsManageDiscordDeleteResponseDto>;
+    let response: AxiosResponse<CommunityEventsManageDiscordEndEventResponseDto>;
     try {
       response = await firstValueFrom(
-        this.httpService.patch<CommunityEventsManageDiscordDeleteResponseDto>(
+        this.httpService.patch<CommunityEventsManageDiscordEndEventResponseDto>(
           url,
-          {
-            organizerSId,
-            ...request,
-          },
+          request,
         ),
       );
     } catch (error) {
       this.logger.error(
-        `failed to end event for guild: ${request.guildSId}, organizer: ${organizerSId}`,
+        `failed to end event for guild: ${request.guildSId}`,
       );
       throw error;
     }

@@ -49,7 +49,6 @@ export class EndEventCommandService {
 
     try {
       const response = await this.eventsApiService.endEvent(
-        interaction.member!.user.id,
         {
           guildSId: interaction.guild!.id,
           voiceChannelSId: endEventDto.voiceChannelId,
@@ -109,6 +108,7 @@ export class EndEventCommandService {
     description?: string,
     availablePOAPs?: number,
   ): APIEmbed {
+    availablePOAPs = availablePOAPs ?? 0;
     return {
       title,
       color: Colors.DarkRed,
