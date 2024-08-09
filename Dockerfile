@@ -1,7 +1,7 @@
 ARG DOTENV_KEY
 
 FROM node:20.11.1-alpine AS base
-LABEL description="Discord bot for BadgeBuddy"
+LABEL description="Discord bot for badgebuddy"
 
 RUN corepack enable
 
