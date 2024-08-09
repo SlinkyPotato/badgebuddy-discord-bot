@@ -1,4 +1,4 @@
-# Badge Buddy Discord Bot
+# Badgebuddy Discord Bot
 
 ## Description
 A discord bot to deliver POAPs to community members.
