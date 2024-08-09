@@ -16,6 +16,20 @@ All notable changes to this project will be documented in this file. See [standa
 
 * manual add of 1.0.0 in changelog ([e389f17](https://github.com/SlinkyPotato/badgebuddy-discord-bot/commit/e389f175293b4a0edec6d62731c8b936ffdf3eeb))
 
+## [1.0.0](https://github.com/SlinkyPotato/badgebuddy-discord-bot/compare/v0.0.3-10...v1.0.0) (2024-08-09)
+
+
+### Refactor
+
+* pnpm up ([5347242](https://github.com/SlinkyPotato/badgebuddy-discord-bot/commit/53472428172d1bd171befa5e1b9b51de3465db21))
+* set typescript version to ~5.5.4 ([5ab55fc](https://github.com/SlinkyPotato/badgebuddy-discord-bot/commit/5ab55fc3c9a98ff2ab1cb379fc2f28c01094a2f7))
+* upgrade package deps, gh actions, docker name ([2be9a68](https://github.com/SlinkyPotato/badgebuddy-discord-bot/commit/2be9a68fc46b7770de154c59947c5463fa8f19db))
+
+
+### Docs
+
+* manual add of 1.0.0 in changelog ([e389f17](https://github.com/SlinkyPotato/badgebuddy-discord-bot/commit/e389f175293b4a0edec6d62731c8b936ffdf3eeb))
+
 ## [1.0.0](https://github.com/SlinkyPotato/badgebuddy-discord-bot/compare/v0.0.2...v1.0.0) (2024-08-09)
 
 
