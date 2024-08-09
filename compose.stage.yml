@@ -2,7 +2,7 @@ name: stage_badgebuddy
 services:
   discord-bot-1:
     container_name: discord-bot-1_stage-badgebuddy
-    image: badgebuddy/discord-bot:next
+    image: amaredeus/badgebuddy-discord-bot:next
     restart: always
     networks:
       - stage_server

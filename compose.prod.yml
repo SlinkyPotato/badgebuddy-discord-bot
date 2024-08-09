@@ -2,7 +2,7 @@ name: prod_badgebuddy
 services:
   discord-bot-1:
     container_name: discord-bot-1_prod-badgebuddy
-    image: badgebuddy/discord-bot:latest
+    image: amaredeus/badgebuddy-discord-bot:latest
     restart: always
     networks:
       - prod_server
